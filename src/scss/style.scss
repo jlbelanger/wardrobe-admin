@@ -1,0 +1,8 @@
+$crudnick-primary: #382893;
+
+@import './node_modules/@jlbelanger/crudnick/src/style';
+
+.formosa-autocomplete__value {
+	padding-left: 0;
+	padding-right: #{$formosa-autocomplete-value-height - $formosa-autocomplete-value-padding-top};
+}
