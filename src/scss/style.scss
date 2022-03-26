@@ -6,3 +6,14 @@ $crudnick-primary: #382893;
 	padding-left: 0;
 	padding-right: #{$formosa-autocomplete-value-height - $formosa-autocomplete-value-padding-top};
 }
+
+.image-placeholder {
+	height: 50px;
+	width: 50px;
+}
+
+.image {
+	display: block;
+	margin: 0 auto;
+	max-width: 50px;
+}

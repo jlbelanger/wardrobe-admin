@@ -8,6 +8,10 @@ ReactDOM.render(
 	<React.StrictMode>
 		<App
 			nav={[
+				{ label: 'Categories', path: '/categories' },
+				{ label: 'Clothes', path: '/clothes' },
+				{ label: 'Colours', path: '/colours' },
+				{ label: 'Seasons', path: '/seasons' },
 				{ label: 'Users', path: '/users' },
 			]}
 			routerAttributes={{
