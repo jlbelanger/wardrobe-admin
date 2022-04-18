@@ -17,6 +17,9 @@ describe('categories', () => {
 					order_num: '1',
 					order_num_footer: '2',
 				},
+				autopopulate: {
+					slug: `aaa-${timestamp}`,
+				},
 			},
 			fieldsEdit: [
 				{
@@ -24,6 +27,9 @@ describe('categories', () => {
 						name: `Bbb ${timestamp}`,
 						order_num: '3',
 						order_num_footer: '4',
+					},
+					autopopulate: {
+						slug: `bbb-${timestamp}`,
 					},
 				},
 			],
@@ -41,6 +47,9 @@ describe('categories', () => {
 				check: {
 					is_default: true,
 				},
+				autopopulate: {
+					slug: `aaa-${timestamp}`,
+				},
 			},
 			fieldsEdit: [
 				{
@@ -51,6 +60,9 @@ describe('categories', () => {
 					},
 					uncheck: {
 						is_default: true,
+					},
+					autopopulate: {
+						slug: `bbb-${timestamp}`,
 					},
 				},
 			],
