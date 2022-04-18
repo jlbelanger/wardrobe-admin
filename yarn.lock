@@ -1384,18 +1384,18 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jlbelanger/crudnick@jlbelanger/crudnick#04ff89b8b2ab16d0fd615b6dce78e1a77588e930":
+"@jlbelanger/crudnick@jlbelanger/crudnick#8caf861bcc8210871f3a2ed46b5e25905448f021":
   version "1.0.0"
-  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/04ff89b8b2ab16d0fd615b6dce78e1a77588e930"
+  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/8caf861bcc8210871f3a2ed46b5e25905448f021"
   dependencies:
-    "@jlbelanger/formosa" jlbelanger/formosa#73f311572b7fff3bc403bb7ccd1c3b040877d9ef
+    "@jlbelanger/formosa" jlbelanger/formosa#8ef7edf067640120f23672ed17a67c76a75b026d
     get-value "^3.0.1"
     js-cookie "^3.0.1"
     prop-types "^15.8.1"
 
-"@jlbelanger/formosa@jlbelanger/formosa#73f311572b7fff3bc403bb7ccd1c3b040877d9ef":
-  version "1.0.0"
-  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/73f311572b7fff3bc403bb7ccd1c3b040877d9ef"
+"@jlbelanger/formosa@jlbelanger/formosa#8ef7edf067640120f23672ed17a67c76a75b026d":
+  version "1.0.1"
+  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/8ef7edf067640120f23672ed17a67c76a75b026d"
   dependencies:
     get-value "^3.0.1"
     prop-types "^15.8.0"
