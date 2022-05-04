@@ -18,7 +18,7 @@ cd wardrobe-admin
 yarn start
 ```
 
-View the site at http://localhost:3000/admin
+View the site at https://localhost:3000/admin
 
 ### Lint
 
