@@ -2,40 +2,35 @@ import { Api, Field } from '@jlbelanger/formosa';
 import React, { useEffect, useState } from 'react';
 
 export default function Form() {
-	const [categories, setCategories] = useState(null);
-	const [colours, setColours] = useState(null);
-	const [seasons, setSeasons] = useState(null);
+	const [categories, setCategories] = useState([]);
+	const [colours, setColours] = useState([]);
+	const [seasons, setSeasons] = useState([]);
 	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		if (categories === null) {
-			setCategories([]);
-			setColours([]);
-			setSeasons([]);
-			Api.get('categories?fields[categories]=name')
-				.then((response) => {
-					setCategories(response);
-				})
-				.catch((response) => {
-					setError(response);
-				});
-			Api.get('colours?fields[colours]=name')
-				.then((response) => {
-					setColours(response);
-				})
-				.catch((response) => {
-					setError(response);
-				});
-			Api.get('seasons?fields[seasons]=name')
-				.then((response) => {
-					setSeasons(response);
-				})
-				.catch((response) => {
-					setError(response);
-				});
-		}
+		Api.get('categories?fields[categories]=name')
+			.then((response) => {
+				setCategories(response);
+			})
+			.catch((response) => {
+				setError(response);
+			});
+		Api.get('colours?fields[colours]=name')
+			.then((response) => {
+				setColours(response);
+			})
+			.catch((response) => {
+				setError(response);
+			});
+		Api.get('seasons?fields[seasons]=name')
+			.then((response) => {
+				setSeasons(response);
+			})
+			.catch((response) => {
+				setError(response);
+			});
 		return () => {};
-	});
+	}, []);
 
 	const labelFn = (option) => (
 		<a
