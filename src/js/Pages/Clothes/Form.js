@@ -43,7 +43,7 @@ export default function Form() {
 		</a>
 	);
 
-	const valueKey = (option) => (JSON.stringify({ id: option.id, type: option.type }));
+	const valueKey = (option) => ({ id: option.id, type: option.type });
 
 	return (
 		<>

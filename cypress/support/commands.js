@@ -170,7 +170,7 @@ Cypress.Commands.add('fillForm', ({ fields }) => {
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'fileAdd')) {
 		Object.keys(fields.fileAdd).forEach((name) => {
-			cy.get(`[name="${name}"]`).attachFile(fields.fileAdd[name].source);
+			cy.get(`[id="${name}"]`).attachFile(fields.fileAdd[name].source);
 		});
 	}
 });
