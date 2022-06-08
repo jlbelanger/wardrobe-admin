@@ -13,8 +13,6 @@ export default function Index() {
 			]}
 			defaultOptions={{
 				sortKey: 'name',
-				sortDir: 'asc',
-				filters: {},
 			}}
 			path="colours"
 			title="Colours"

@@ -23,8 +23,6 @@ export default function Index() {
 			]}
 			defaultOptions={{
 				sortKey: 'order_num',
-				sortDir: 'asc',
-				filters: {},
 			}}
 			path="categories"
 			title="Categories"

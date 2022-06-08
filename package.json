@@ -22,8 +22,8 @@
 		"test:cypress": "node_modules/.bin/cypress open"
 	},
 	"dependencies": {
-		"@jlbelanger/crudnick": "jlbelanger/crudnick#86961a15c723d6646ac00bf2b519108d6b42e957",
-		"@jlbelanger/formosa": "jlbelanger/formosa#a1661c52718067417f34113ef909a1a7855d9af7",
+		"@jlbelanger/crudnick": "jlbelanger/crudnick#3c66834dc8898ad652503973ac0595fe0843eaee",
+		"@jlbelanger/formosa": "jlbelanger/formosa#e41dd3870a57b7b39fd4eafa531e71aa83096170",
 		"node-sass": "^7.0.0",
 		"prop-types": "^15.8.0",
 		"react": "^17.0.2",

@@ -63,8 +63,6 @@ export default function Index() {
 			columns={columns}
 			defaultOptions={{
 				sortKey: 'name',
-				sortDir: 'asc',
-				filters: {},
 			}}
 			path="clothes"
 			title="Clothes"

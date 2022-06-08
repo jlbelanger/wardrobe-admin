@@ -17,8 +17,6 @@ export default function Index() {
 			]}
 			defaultOptions={{
 				sortKey: 'username',
-				sortDir: 'asc',
-				filters: {},
 			}}
 			path="users"
 			title="Users"
