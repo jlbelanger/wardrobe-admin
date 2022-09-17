@@ -8,6 +8,7 @@ export default function Index() {
 			label: 'Image',
 			disableSearch: true,
 			disableSort: true,
+			size: 1,
 			fn: (_row, value) => {
 				if (!value) {
 					return (
@@ -29,20 +30,28 @@ export default function Index() {
 			key: 'name',
 			label: 'Name',
 			link: true,
+			thAttributes: {
+				className: 'col--50',
+			},
 		},
 		{
 			key: 'relationships.category.name',
 			label: 'Category',
+			size: 20,
 		},
 		{
 			key: 'relationships.colour.name',
 			label: 'Colour',
+			size: 20,
 		},
 		{
 			key: 'relationships.seasons',
 			label: 'Seasons',
 			disableSearch: true,
 			disableSort: true,
+			thAttributes: {
+				className: 'col--50',
+			},
 			fn: (_row, value) => {
 				if (!value) {
 					return null;

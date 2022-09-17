@@ -9,10 +9,16 @@ export default function Index() {
 					key: 'username',
 					label: 'Username',
 					link: true,
+					thAttributes: {
+						className: 'col--50',
+					},
 				},
 				{
 					key: 'email',
 					label: 'Email',
+					thAttributes: {
+						className: 'col--50',
+					},
 				},
 			]}
 			defaultOptions={{
