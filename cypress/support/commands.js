@@ -47,6 +47,7 @@ Cypress.Commands.add('handlesAdd', ({
 	fields,
 	singular,
 }) => {
+	cy.intercept('GET', `${apiPath}/*`).as(`getRecord${singular}`);
 	cy.intercept('POST', `${apiPath}*`).as(`postRecord${singular}`);
 
 	cy.contains('Add').click();
@@ -57,6 +58,7 @@ Cypress.Commands.add('handlesAdd', ({
 	cy.wait(`@postRecord${singular}`).its('response.statusCode').should('equal', 201);
 	cy.contains(`${capitalize(singular)} added successfully.`).should('exist');
 	cy.get('h1').should('have.text', `Edit ${singular}`);
+	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
 	cy.checkForm({ fields });
 	if (after) {
 		after();
