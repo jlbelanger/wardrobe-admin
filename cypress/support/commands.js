@@ -258,7 +258,11 @@ Cypress.Commands.add('checkForm', ({ fields }) => {
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'fileAdd')) {
 		Object.keys(fields.fileAdd).forEach((name) => {
-			cy.get(`[id="${name}-name"]`).should('contain', fields.fileAdd[name].dest);
+			if (typeof fields.fileAdd[name].dest === 'object') {
+				cy.get(`[id="${name}-name"]`).invoke('text').should('match', fields.fileAdd[name].dest);
+			} else {
+				cy.get(`[id="${name}-name"]`).invoke('text').should('contain', fields.fileAdd[name].dest);
+			}
 		});
 	}
 

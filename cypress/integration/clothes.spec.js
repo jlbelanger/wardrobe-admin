@@ -22,7 +22,7 @@ describe('clothes', () => {
 				fileAdd: {
 					filename: {
 						source: '500x500.png',
-						dest: `/uploads/clothes/aaa${timestamp}.png`,
+						dest: new RegExp(`/uploads/clothes/[^/]+/aaa${timestamp}.png`),
 					},
 				},
 			},
@@ -45,7 +45,7 @@ describe('clothes', () => {
 					fileAdd: {
 						filename: {
 							source: '400x400.png',
-							dest: `/uploads/clothes/bbb${timestamp}.png`,
+							dest: new RegExp(`/uploads/clothes/[^/]+/bbb${timestamp}.png`),
 						},
 					},
 				},
@@ -71,7 +71,7 @@ describe('clothes', () => {
 				fileAdd: {
 					filename: {
 						source: '500x500.png',
-						dest: `/uploads/clothes/aaa${timestamp}.png`,
+						dest: new RegExp(`/uploads/clothes/[^/]+/aaa${timestamp}\.png`),
 					},
 				},
 			},
@@ -100,7 +100,7 @@ describe('clothes', () => {
 					fileAdd: {
 						filename: {
 							source: '400x400.png',
-							dest: `/uploads/clothes/bbb${timestamp}.png`,
+							dest: new RegExp(`/uploads/clothes/[^/]+/bbb${timestamp}.png`),
 						},
 					},
 				},
