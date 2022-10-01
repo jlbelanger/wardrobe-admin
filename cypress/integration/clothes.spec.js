@@ -71,7 +71,7 @@ describe('clothes', () => {
 				fileAdd: {
 					filename: {
 						source: '500x500.png',
-						dest: new RegExp(`/uploads/clothes/[^/]+/aaa${timestamp}\.png`),
+						dest: new RegExp(`/uploads/clothes/[^/]+/aaa${timestamp}.png`),
 					},
 				},
 			},
