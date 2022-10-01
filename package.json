@@ -1,7 +1,7 @@
 {
 	"name": "@jlbelanger/wardrobe-admin",
 	"version": "1.0.0",
-	"description": "CMS for Jenny's Wardrobe.",
+	"description": "The admin site for Jenny's Wardrobe.",
 	"license": "GPL-3.0-only",
 	"author": {
 		"name": "Jenny Belanger",
