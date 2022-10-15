@@ -1,6 +1,6 @@
 describe('clothes', () => {
 	it('works', () => {
-		let timestamp = (new Date()).getTime();
+		let timestamp = `${(new Date()).getTime()}1`;
 		const data = {
 			apiPath: '**/api/clothes',
 			path: '/clothes',
@@ -52,7 +52,7 @@ describe('clothes', () => {
 			],
 		});
 
-		timestamp = (new Date()).getTime();
+		timestamp = `${(new Date()).getTime()}2`;
 		cy.handlesEverything({
 			...data,
 			fieldsAdd: {
