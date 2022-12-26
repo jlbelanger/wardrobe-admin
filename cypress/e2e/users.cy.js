@@ -1,4 +1,9 @@
 describe('users', () => {
+	beforeEach(() => {
+		cy.login();
+		cy.visit('/');
+	});
+
 	it('works', () => {
 		const timestamp = (new Date()).getTime();
 		const data = {
@@ -8,7 +13,6 @@ describe('users', () => {
 			plural: 'Users',
 		};
 
-		cy.login();
 		cy.handlesEverything({
 			...data,
 			fieldsAdd: {
@@ -23,6 +27,7 @@ describe('users', () => {
 			afterAdd: () => {
 				cy.clearCookies();
 				cy.login(`aaa${timestamp}`, 'aaa');
+				cy.visit('/');
 				cy.get('#crudnick-menu-button').click();
 				cy.contains('Users').click();
 				cy.contains(`aaa${timestamp}`).click();
@@ -44,6 +49,7 @@ describe('users', () => {
 				cy.login(`aaa${timestamp}`, 'bbb', 401);
 				cy.login(`bbb${timestamp}`, 'aaa', 401);
 				cy.login(`bbb${timestamp}`, 'bbb');
+				cy.visit('/');
 				cy.get('#crudnick-menu-button').click();
 				cy.contains('Users').click();
 				cy.contains(`bbb${timestamp}`).click();
@@ -51,6 +57,7 @@ describe('users', () => {
 			afterDelete: () => {
 				cy.clearCookies();
 				cy.login(`bbb${timestamp}`, 'bbb', 401);
+				cy.visit('/');
 			},
 		});
 	});

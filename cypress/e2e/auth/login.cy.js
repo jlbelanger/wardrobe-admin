@@ -27,6 +27,8 @@ describe('login', () => {
 
 	describe('with a valid username and password', () => {
 		it('works', () => {
+			cy.intercept('DELETE', '**/api/auth/logout').as('logout');
+
 			// Login.
 			cy.clearCookies();
 			cy.visit('/');
@@ -40,6 +42,7 @@ describe('login', () => {
 			// Logout.
 			cy.get('#crudnick-menu-button').click();
 			cy.contains('Logout').click();
+			cy.wait('@logout').its('response.statusCode').should('equal', 204);
 			cy.location('pathname').should('eq', '/admin');
 		});
 	});

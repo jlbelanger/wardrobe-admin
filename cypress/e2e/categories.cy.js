@@ -1,4 +1,9 @@
 describe('categories', () => {
+	beforeEach(() => {
+		cy.login();
+		cy.visit('/');
+	});
+
 	it('works', () => {
 		let timestamp = `${(new Date()).getTime()}1`;
 		const data = {
@@ -8,7 +13,6 @@ describe('categories', () => {
 			plural: 'Categories',
 		};
 
-		cy.login();
 		cy.handlesEverything({
 			...data,
 			fieldsAdd: {
