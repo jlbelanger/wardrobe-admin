@@ -56,7 +56,7 @@ Cypress.Commands.add('handlesAdd', ({
 	cy.fillForm({ fields });
 	cy.contains('Save').click();
 	cy.wait(`@postRecord${singular}`).its('response.statusCode').should('equal', 201);
-	cy.contains(`${capitalize(singular)} added successfully.`).should('exist');
+	cy.contains(`${capitalize(singular)} added successfully.`).next().click();
 	cy.get('h1').should('have.text', `Edit ${singular}`);
 	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
 	cy.checkForm({ fields });
@@ -68,10 +68,11 @@ Cypress.Commands.add('handlesAdd', ({
 Cypress.Commands.add('handlesEdit', ({ after, apiPath, fields, singular }) => {
 	cy.intercept('PUT', `${apiPath}/*`).as('putRecord');
 
+	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
 	cy.fillForm({ fields });
 	cy.contains('Save').click();
 	cy.wait('@putRecord').its('response.statusCode').should('equal', 200);
-	cy.contains(`${capitalize(singular)} saved successfully.`).should('exist');
+	cy.contains(`${capitalize(singular)} saved successfully.`).next().click();
 	cy.reload();
 	cy.checkForm({ fields });
 	if (after) {
@@ -85,7 +86,7 @@ Cypress.Commands.add('handlesDelete', ({ apiPath, plural, singular }) => {
 
 	cy.contains('Delete').click();
 	cy.wait('@deleteRecord').its('response.statusCode').should('equal', 204);
-	cy.contains(`${capitalize(singular)} deleted successfully.`).should('exist');
+	cy.contains(`${capitalize(singular)} deleted successfully.`).next().click();
 	cy.wait(`@getRecords${plural}`).its('response.statusCode').should('equal', 200);
 });
 
