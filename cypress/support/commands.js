@@ -85,6 +85,7 @@ Cypress.Commands.add('handlesDelete', ({ apiPath, plural, singular }) => {
 	cy.intercept('GET', `${apiPath}*`).as(`getRecords${plural}`);
 
 	cy.contains('Delete').click();
+	cy.get('dialog').contains('Delete').click();
 	cy.wait('@deleteRecord').its('response.statusCode').should('equal', 204);
 	cy.contains(`${capitalize(singular)} deleted successfully.`).next().click();
 	cy.wait(`@getRecords${plural}`).its('response.statusCode').should('equal', 200);
