@@ -30,7 +30,9 @@ describe('users', () => {
 				cy.visit('/');
 				cy.get('#crudnick-menu-button').click();
 				cy.contains('Users').click();
+				cy.intercept('GET', `${data.apiPath}/*`).as(`getRecord${data.singular}`);
 				cy.contains(`aaa${timestamp}`).click();
+				cy.wait(`@getRecord${data.singular}`).its('response.statusCode').should('equal', 200);
 			},
 			fieldsEdit: [
 				{
@@ -52,7 +54,9 @@ describe('users', () => {
 				cy.visit('/');
 				cy.get('#crudnick-menu-button').click();
 				cy.contains('Users').click();
+				cy.intercept('GET', `${data.apiPath}/*`).as(`getRecord${data.singular}`);
 				cy.contains(`bbb${timestamp}`).click();
+				cy.wait(`@getRecord${data.singular}`).its('response.statusCode').should('equal', 200);
 			},
 			afterDelete: () => {
 				cy.clearCookies();
