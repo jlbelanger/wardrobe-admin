@@ -4,14 +4,15 @@ describe('categories', () => {
 		cy.visit('/');
 	});
 
+	const data = {
+		apiPath: '**/api/categories',
+		path: '/categories',
+		singular: 'category',
+		plural: 'Categories',
+	};
+
 	it('works', () => {
 		let timestamp = `${(new Date()).getTime()}1`;
-		const data = {
-			apiPath: '**/api/categories',
-			path: '/categories',
-			singular: 'category',
-			plural: 'Categories',
-		};
 
 		cy.handlesEverything({
 			...data,
@@ -71,5 +72,32 @@ describe('categories', () => {
 				},
 			],
 		});
+	});
+
+	const errorData = {
+		...data,
+		fields: {
+			text: {
+				name: () => (`Aaa ${(new Date()).getTime()}`),
+				order_num: '1',
+				order_num_footer: '2',
+			},
+		},
+	};
+
+	it('handles index errors', () => {
+		cy.handlesIndexErrors(errorData);
+	});
+
+	it('handles add errors', () => {
+		cy.handlesAddErrors(errorData);
+	});
+
+	it('handles view errors', () => {
+		cy.handlesViewErrors(errorData);
+	});
+
+	it('handles edit errors', () => {
+		cy.handlesEditErrors(errorData);
 	});
 });

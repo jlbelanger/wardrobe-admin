@@ -4,14 +4,15 @@ describe('clothes', () => {
 		cy.visit('/');
 	});
 
+	const data = {
+		apiPath: '**/api/clothes',
+		path: '/clothes',
+		singular: 'clothes',
+		plural: 'Clothes',
+	};
+
 	it('works', () => {
 		let timestamp = `${(new Date()).getTime()}1`;
-		const data = {
-			apiPath: '**/api/clothes',
-			path: '/clothes',
-			singular: 'clothes',
-			plural: 'Clothes',
-		};
 
 		cy.handlesEverything({
 			...data,
@@ -110,5 +111,44 @@ describe('clothes', () => {
 				},
 			],
 		});
+	});
+
+	const errorData = {
+		...data,
+		fields: {
+			text: {
+				name: () => (`Aaa ${(new Date()).getTime()}`),
+			},
+			autocompleteAdd: {
+				category: ['Skirts'],
+				colour: ['Yellow'],
+			},
+			fileAdd: {
+				filename: {
+					source: '500x500.png',
+				},
+			},
+		},
+		fieldsEdit: {
+			text: {
+				name: () => (`Bbb ${(new Date()).getTime()}`),
+			},
+		},
+	};
+
+	it('handles index errors', () => {
+		cy.handlesIndexErrors(errorData);
+	});
+
+	it('handles add errors', () => {
+		cy.handlesAddErrors(errorData);
+	});
+
+	it('handles view errors', () => {
+		cy.handlesViewErrors(errorData);
+	});
+
+	it('handles edit errors', () => {
+		cy.handlesEditErrors(errorData);
 	});
 });

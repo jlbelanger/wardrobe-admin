@@ -56,7 +56,7 @@ Cypress.Commands.add('handlesAdd', ({
 	cy.fillForm({ fields });
 	cy.contains('Save').click();
 	cy.wait(`@postRecord${singular}`).its('response.statusCode').should('equal', 201);
-	cy.contains(`${capitalize(singular)} added successfully.`).next().click();
+	cy.closeToast(`${capitalize(singular)} added successfully.`);
 	cy.get('h1').should('have.text', `Edit ${singular}`);
 	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
 	cy.checkForm({ fields });
@@ -66,14 +66,16 @@ Cypress.Commands.add('handlesAdd', ({
 });
 
 Cypress.Commands.add('handlesEdit', ({ after, apiPath, fields, singular }) => {
+	cy.intercept('GET', `${apiPath}/*`).as(`getRecord${singular}`);
 	cy.intercept('PUT', `${apiPath}/*`).as('putRecord');
 
 	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
 	cy.fillForm({ fields });
 	cy.contains('Save').click();
 	cy.wait('@putRecord').its('response.statusCode').should('equal', 200);
-	cy.contains(`${capitalize(singular)} saved successfully.`).next().click();
+	cy.closeToast(`${capitalize(singular)} saved successfully.`);
 	cy.reload();
+	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
 	cy.checkForm({ fields });
 	if (after) {
 		after();
@@ -87,7 +89,7 @@ Cypress.Commands.add('handlesDelete', ({ apiPath, plural, singular }) => {
 	cy.contains('Delete').click();
 	cy.get('dialog').contains('Delete').click();
 	cy.wait('@deleteRecord').its('response.statusCode').should('equal', 204);
-	cy.contains(`${capitalize(singular)} deleted successfully.`).next().click();
+	cy.closeToast(`${capitalize(singular)} deleted successfully.`);
 	cy.wait(`@getRecords${plural}`).its('response.statusCode').should('equal', 200);
 });
 
@@ -102,15 +104,16 @@ Cypress.Commands.add('removeAutocompleteValue', (name, value) => {
 	cy.get(`[id="${name}-wrapper"] .crudnick-autocomplete-link`).contains(value).next().click();
 });
 
-Cypress.Commands.add('addAutocompleteValue', (name, value) => {
-	cy.get(`[id="${name}"]`).clear().type(value);
+Cypress.Commands.add('addAutocompleteValue', (id, value) => {
+	cy.get(`[id="${id}"]`).clear().type(value);
 	cy.get('.formosa-autocomplete__option__button').contains(value).click();
 });
 
 Cypress.Commands.add('fillForm', ({ fields }) => {
 	if (Object.prototype.hasOwnProperty.call(fields, 'text')) {
 		Object.keys(fields.text).forEach((name) => {
-			cy.fillTextField(name, fields.text[name]);
+			const value = typeof fields.text[name] === 'function' ? fields.text[name]() : fields.text[name];
+			cy.fillTextField(name, value);
 		});
 	}
 
@@ -277,4 +280,94 @@ Cypress.Commands.add('checkForm', ({ fields }) => {
 	if (Object.prototype.hasOwnProperty.call(fields, 'default')) {
 		cy.checkForm({ fields: fields.default });
 	}
+});
+
+Cypress.Commands.add('closeToast', (message) => {
+	cy.contains(message).should('exist');
+	cy.get('.formosa-toast__close').click();
+});
+
+export const mockServerError = (method, url) => ( // eslint-disable-line import/prefer-default-export
+	cy.intercept(
+		method,
+		url,
+		{
+			statusCode: 500,
+			body: {
+				errors: [
+					{
+						title: 'Unable to connect to the server. Please try again later.',
+						status: '500',
+					},
+				],
+			},
+		}
+	)
+);
+
+Cypress.Commands.add('handlesIndexErrors', ({ apiPath, path }) => {
+	mockServerError('GET', `${apiPath}*`).as('getRecords');
+
+	cy.visit(path);
+	cy.wait('@getRecords').its('response.statusCode').should('equal', 500);
+	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
+});
+
+Cypress.Commands.add('handlesAddErrors', ({ apiPath, fields, path }) => {
+	mockServerError('POST', `${apiPath}*`).as('postRecord');
+
+	cy.visit(`${path}/add`);
+	cy.fillForm({ fields });
+	cy.contains('Save').click();
+	cy.wait('@postRecord').its('response.statusCode').should('equal', 500);
+	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
+});
+
+Cypress.Commands.add('handlesViewErrors', ({ apiPath, fields, path, singular }) => {
+	// View with not found error.
+	cy.visit(`${path}/987654321`);
+	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: This record does not exist.');
+
+	mockServerError('GET', `${apiPath}/*`).as('getRecord');
+	cy.intercept('POST', `${apiPath}*`).as('postRecord');
+
+	// Add.
+	cy.visit(`${path}/add`);
+	cy.fillForm({ fields });
+	cy.contains('Save').click();
+	cy.wait('@postRecord').its('response.statusCode').should('equal', 201);
+	cy.closeToast(`${capitalize(singular)} added successfully.`);
+
+	// View with server error.
+	cy.wait('@getRecord').its('response.statusCode').should('equal', 500);
+	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
+});
+
+Cypress.Commands.add('handlesEditErrors', ({ apiPath, fields, fieldsEdit, path, singular }) => {
+	cy.intercept('GET', `${apiPath}/*`).as('getRecord');
+	cy.intercept('POST', `${apiPath}*`).as('postRecord');
+	mockServerError('PUT', `${apiPath}/*`).as('putRecord');
+	mockServerError('DELETE', `${apiPath}/*`).as('deleteRecord');
+
+	// Add.
+	cy.visit(`${path}/add`);
+	cy.fillForm({ fields });
+	cy.contains('Save').click();
+	cy.wait('@postRecord').its('response.statusCode').should('equal', 201);
+	cy.closeToast(`${capitalize(singular)} added successfully.`);
+
+	// View.
+	cy.wait('@getRecord').its('response.statusCode').should('equal', 200);
+
+	// Edit with error.
+	cy.fillForm({ fields: fieldsEdit || fields });
+	cy.contains('Save').click();
+	cy.wait('@putRecord').its('response.statusCode').should('equal', 500);
+	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
+
+	// Delete with error.
+	cy.contains('Delete').click();
+	cy.get('dialog').contains('Delete').click();
+	cy.wait('@deleteRecord').its('response.statusCode').should('equal', 500);
+	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
 });

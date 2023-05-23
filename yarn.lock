@@ -1516,23 +1516,24 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
-"@jlbelanger/crudnick@jlbelanger/crudnick#1cc4e53dd5c29c3eef8e453c203bb3c3f12a0357":
+"@jlbelanger/crudnick@jlbelanger/crudnick#c69acd2533073f7eef850243f9d5c441bf58bdcb":
   version "1.0.1"
-  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/1cc4e53dd5c29c3eef8e453c203bb3c3f12a0357"
+  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/c69acd2533073f7eef850243f9d5c441bf58bdcb"
   dependencies:
-    "@jlbelanger/formosa" jlbelanger/formosa#dbca478a1e069fb7d8f62973c5b7c79a72eff66f
+    "@jlbelanger/formosa" jlbelanger/formosa#776ff33bf2241abd650abc2bfc190f469ebaf707
     get-value "^3.0.1"
     js-cookie "^3.0.1"
     prop-types "^15.8.1"
 
-"@jlbelanger/formosa@jlbelanger/formosa#dbca478a1e069fb7d8f62973c5b7c79a72eff66f":
+"@jlbelanger/formosa@jlbelanger/formosa#776ff33bf2241abd650abc2bfc190f469ebaf707":
   version "1.0.2"
-  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/dbca478a1e069fb7d8f62973c5b7c79a72eff66f"
+  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/776ff33bf2241abd650abc2bfc190f469ebaf707"
   dependencies:
     get-value "^3.0.1"
     prop-types "^15.8.1"
     react-promise-tracker "^2.1.1"
     set-value "^4.1.0"
+    uuid "^9.0.0"
 
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
@@ -9836,6 +9837,11 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 v8-compile-cache@^2.3.0:
   version "2.3.0"
