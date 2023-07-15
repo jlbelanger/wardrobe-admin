@@ -15,3 +15,4 @@ build_static
 deploy_static
 sed -i.bak "s|\".${PUBLIC_URL}\"|\"./admin\"|" package.json
 rm package.json.bak
+printf "\e[0;32mDone.\n\e[0m"
