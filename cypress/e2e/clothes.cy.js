@@ -1,3 +1,15 @@
+import {
+	handlesAdd,
+	handlesAddErrors,
+	handlesDelete,
+	handlesEdit,
+	handlesEditErrors,
+	handlesIndex,
+	handlesIndexErrors,
+	handlesViewErrors,
+	setupInterceptions,
+} from '../support/commands';
+
 describe('clothes', () => {
 	beforeEach(() => {
 		cy.login();
@@ -9,14 +21,24 @@ describe('clothes', () => {
 		path: '/clothes',
 		singular: 'clothes',
 		plural: 'Clothes',
+		formWait: {
+			getCategories: '**/api/categories?*',
+		},
+		waitFn: () => {
+			cy.wait('@getCategories').its('response.statusCode').should('equal', 200);
+		},
 	};
 
 	it('works', () => {
 		let timestamp = `${(new Date()).getTime()}1`;
 
-		cy.handlesEverything({
+		setupInterceptions(data);
+		handlesIndex(data);
+		cy.get('[data-cy="add"]').click();
+
+		handlesAdd({
 			...data,
-			fieldsAdd: {
+			fields: {
 				text: {
 					name: `Aaa ${timestamp}`,
 				},
@@ -31,36 +53,39 @@ describe('clothes', () => {
 					},
 				},
 			},
-			fieldsEdit: [
-				{
-					text: {
-						name: `Bbb ${timestamp}`,
-					},
-					autocompleteRemove: {
-						category: ['Skirts'],
-						colour: ['Yellow'],
-					},
-					autocompleteAdd: {
-						category: ['Dresses'],
-						colour: ['Red'],
-					},
-					fileRemove: {
-						filename: true,
-					},
-					fileAdd: {
-						filename: {
-							source: '400x400.png',
-							dest: new RegExp(`/uploads/clothes/[^/]+/bbb${timestamp}.png`),
-						},
+		});
+		handlesEdit({
+			...data,
+			fields: {
+				text: {
+					name: `Bbb ${timestamp}`,
+				},
+				autocompleteRemove: {
+					category: ['Skirts'],
+					colour: ['Yellow'],
+				},
+				autocompleteAdd: {
+					category: ['Dresses'],
+					colour: ['Red'],
+				},
+				fileRemove: {
+					filename: true,
+				},
+				fileAdd: {
+					filename: {
+						source: '400x400.png',
+						dest: new RegExp(`/uploads/clothes/[^/]+/bbb${timestamp}.png`),
 					},
 				},
-			],
+			},
 		});
+		handlesDelete(data);
 
 		timestamp = `${(new Date()).getTime()}2`;
-		cy.handlesEverything({
+		cy.get('[data-cy="add"]').click();
+		handlesAdd({
 			...data,
-			fieldsAdd: {
+			fields: {
 				text: {
 					name: `Aaa ${timestamp}`,
 				},
@@ -80,37 +105,39 @@ describe('clothes', () => {
 					},
 				},
 			},
-			fieldsEdit: [
-				{
-					text: {
-						name: `Bbb ${timestamp}`,
-					},
-					autocompleteRemove: {
-						category: ['Skirts'],
-						colour: ['Yellow'],
-						seasons: ['Fall Fashions'],
-					},
-					autocompleteAdd: {
-						category: ['Dresses'],
-						colour: ['Red'],
-						seasons: ['Winter Wear'],
-					},
-					uncheck: {
-						is_default: true,
-						is_patterned: true,
-					},
-					fileRemove: {
-						filename: true,
-					},
-					fileAdd: {
-						filename: {
-							source: '400x400.png',
-							dest: new RegExp(`/uploads/clothes/[^/]+/bbb${timestamp}.png`),
-						},
+		});
+		handlesEdit({
+			...data,
+			fields: {
+				text: {
+					name: `Bbb ${timestamp}`,
+				},
+				autocompleteRemove: {
+					category: ['Skirts'],
+					colour: ['Yellow'],
+					seasons: ['Fall Fashions'],
+				},
+				autocompleteAdd: {
+					category: ['Dresses'],
+					colour: ['Red'],
+					seasons: ['Winter Wear'],
+				},
+				uncheck: {
+					is_default: true,
+					is_patterned: true,
+				},
+				fileRemove: {
+					filename: true,
+				},
+				fileAdd: {
+					filename: {
+						source: '400x400.png',
+						dest: new RegExp(`/uploads/clothes/[^/]+/bbb${timestamp}.png`),
 					},
 				},
-			],
+			},
 		});
+		handlesDelete(data);
 	});
 
 	const errorData = {
@@ -137,18 +164,18 @@ describe('clothes', () => {
 	};
 
 	it('handles index errors', () => {
-		cy.handlesIndexErrors(errorData);
+		handlesIndexErrors(errorData);
 	});
 
 	it('handles add errors', () => {
-		cy.handlesAddErrors(errorData);
+		handlesAddErrors(errorData);
 	});
 
 	it('handles view errors', () => {
-		cy.handlesViewErrors(errorData);
+		handlesViewErrors(errorData);
 	});
 
 	it('handles edit errors', () => {
-		cy.handlesEditErrors(errorData);
+		handlesEditErrors(errorData);
 	});
 });

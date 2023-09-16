@@ -1,3 +1,15 @@
+import {
+	handlesAdd,
+	handlesAddErrors,
+	handlesDelete,
+	handlesEdit,
+	handlesEditErrors,
+	handlesIndex,
+	handlesIndexErrors,
+	handlesViewErrors,
+	setupInterceptions,
+} from '../support/commands';
+
 describe('categories', () => {
 	beforeEach(() => {
 		cy.login();
@@ -14,9 +26,13 @@ describe('categories', () => {
 	it('works', () => {
 		let timestamp = `${(new Date()).getTime()}1`;
 
-		cy.handlesEverything({
+		setupInterceptions(data);
+		handlesIndex(data);
+		cy.get('[data-cy="add"]').click();
+
+		handlesAdd({
 			...data,
-			fieldsAdd: {
+			fields: {
 				text: {
 					name: `Aaa ${timestamp}`,
 					order_num: '1',
@@ -26,24 +42,27 @@ describe('categories', () => {
 					slug: `aaa-${timestamp}`,
 				},
 			},
-			fieldsEdit: [
-				{
-					text: {
-						name: `Bbb ${timestamp}`,
-						order_num: '3',
-						order_num_footer: '4',
-					},
-					autopopulate: {
-						slug: `bbb-${timestamp}`,
-					},
-				},
-			],
 		});
+		handlesEdit({
+			...data,
+			fields: {
+				text: {
+					name: `Bbb ${timestamp}`,
+					order_num: '3',
+					order_num_footer: '4',
+				},
+				autopopulate: {
+					slug: `bbb-${timestamp}`,
+				},
+			},
+		});
+		handlesDelete(data);
 
 		timestamp = `${(new Date()).getTime()}2`;
-		cy.handlesEverything({
+		cy.get('[data-cy="add"]').click();
+		handlesAdd({
 			...data,
-			fieldsAdd: {
+			fields: {
 				text: {
 					name: `Aaa ${timestamp}`,
 					order_num: '1',
@@ -56,22 +75,24 @@ describe('categories', () => {
 					slug: `aaa-${timestamp}`,
 				},
 			},
-			fieldsEdit: [
-				{
-					text: {
-						name: `Bbb ${timestamp}`,
-						order_num: '3',
-						order_num_footer: '4',
-					},
-					uncheck: {
-						is_default: true,
-					},
-					autopopulate: {
-						slug: `bbb-${timestamp}`,
-					},
-				},
-			],
 		});
+		handlesEdit({
+			...data,
+			fields: {
+				text: {
+					name: `Bbb ${timestamp}`,
+					order_num: '3',
+					order_num_footer: '4',
+				},
+				uncheck: {
+					is_default: true,
+				},
+				autopopulate: {
+					slug: `bbb-${timestamp}`,
+				},
+			},
+		});
+		handlesDelete(data);
 	});
 
 	const errorData = {
@@ -83,21 +104,26 @@ describe('categories', () => {
 				order_num_footer: '2',
 			},
 		},
+		fieldsEdit: {
+			text: {
+				name: () => (`Bbb ${(new Date()).getTime()}`),
+			},
+		},
 	};
 
 	it('handles index errors', () => {
-		cy.handlesIndexErrors(errorData);
+		handlesIndexErrors(errorData);
 	});
 
 	it('handles add errors', () => {
-		cy.handlesAddErrors(errorData);
+		handlesAddErrors(errorData);
 	});
 
 	it('handles view errors', () => {
-		cy.handlesViewErrors(errorData);
+		handlesViewErrors(errorData);
 	});
 
 	it('handles edit errors', () => {
-		cy.handlesEditErrors(errorData);
+		handlesEditErrors(errorData);
 	});
 });

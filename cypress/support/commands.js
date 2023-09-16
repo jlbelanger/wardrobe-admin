@@ -4,134 +4,62 @@ const capitalize = (s) => (
 	s.replace(/(?:^|\s)\S/g, (a) => (a.toUpperCase()))
 );
 
-Cypress.Commands.add('handlesEverything', ({
-	afterAdd,
-	afterDelete,
-	afterEdit,
-	apiPath,
-	path,
-	singular,
-	plural,
-	fieldsAdd,
-	fieldsEdit,
-}) => {
-	cy.handlesIndex({ apiPath, path, plural });
-	cy.handlesAdd({
-		after: afterAdd,
-		apiPath,
-		singular,
-		fields: fieldsAdd,
-	});
-	fieldsEdit.forEach((fields) => {
-		cy.handlesEdit({ after: afterEdit, apiPath, fields, singular });
-	});
-	cy.handlesDelete({ apiPath, plural, singular });
-	if (afterDelete) {
-		afterDelete();
-	}
-});
+export const pad = (n, width, z = '0') => {
+	n = n.toString();
+	return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
 
-Cypress.Commands.add('handlesIndex', ({ apiPath, path, plural }) => {
-	cy.intercept('GET', `${apiPath}*`).as(`getRecords${plural}`);
+export const randomNumber = (min, max) => (Math.floor(Math.random() * (max - min + 1)) + min);
 
-	cy.get('#crudnick-menu-button').click();
-	cy.get(`[href="${Cypress.env('public_path')}${path}"]`).click();
-	cy.wait(`@getRecords${plural}`).its('response.statusCode').should('equal', 200);
-	cy.get('h1 span').should('have.text', plural);
-	cy.get('h1 small').invoke('text').should('match', /^ \([0-9,]+ results?\)/);
-});
+export const randomDate = () => {
+	const year = randomNumber(1900, 2100);
+	const month = pad(randomNumber(1, 12), 2);
+	const day = pad(randomNumber(1, 28), 2);
+	return `${year}-${month}-${day}`;
+};
 
-Cypress.Commands.add('handlesAdd', ({
-	after,
-	apiPath,
-	fields,
-	singular,
-}) => {
-	cy.intercept('GET', `${apiPath}/*`).as(`getRecord${singular}`);
-	cy.intercept('POST', `${apiPath}*`).as(`postRecord${singular}`);
-
-	cy.contains('Add').click();
-	cy.get('h1').should('have.text', `Add ${singular}`);
-	cy.get('[type="submit"]').click();
-	cy.fillForm({ fields });
-	cy.contains('Save').click();
-	cy.wait(`@postRecord${singular}`).its('response.statusCode').should('equal', 201);
-	cy.closeToast(`${capitalize(singular)} added successfully.`);
-	cy.get('h1').should('have.text', `Edit ${singular}`);
-	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
-	cy.checkForm({ fields });
-	if (after) {
-		after();
-	}
-});
-
-Cypress.Commands.add('handlesEdit', ({ after, apiPath, fields, singular }) => {
-	cy.intercept('GET', `${apiPath}/*`).as(`getRecord${singular}`);
-	cy.intercept('PUT', `${apiPath}/*`).as('putRecord');
-
-	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
-	cy.fillForm({ fields });
-	cy.contains('Save').click();
-	cy.wait('@putRecord').its('response.statusCode').should('equal', 200);
-	cy.closeToast(`${capitalize(singular)} saved successfully.`);
-	cy.reload();
-	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
-	cy.checkForm({ fields });
-	if (after) {
-		after();
-	}
-});
-
-Cypress.Commands.add('handlesDelete', ({ apiPath, plural, singular }) => {
-	cy.intercept('DELETE', `${apiPath}/*`).as('deleteRecord');
-	cy.intercept('GET', `${apiPath}*`).as(`getRecords${plural}`);
-
-	cy.contains('Delete').click();
-	cy.get('dialog').contains('Delete').click();
-	cy.wait('@deleteRecord').its('response.statusCode').should('equal', 204);
-	cy.closeToast(`${capitalize(singular)} deleted successfully.`);
-	cy.wait(`@getRecords${plural}`).its('response.statusCode').should('equal', 200);
-});
-
-Cypress.Commands.add('fillTextField', (name, value) => {
+export const fillTextField = (name, value) => {
 	cy.get(`[name="${name}"]`).clear();
 	if (value) {
 		cy.get(`[name="${name}"]`).type(value);
 	}
-});
+};
 
-Cypress.Commands.add('removeAutocompleteValue', (name, value) => {
+export const removeAutocompleteValue = (name, value) => {
 	cy.get(`[id="${name}-wrapper"] .crudnick-autocomplete-link`).contains(value).next().click();
-});
+};
 
-Cypress.Commands.add('addAutocompleteValue', (id, value) => {
+export const addAutocompleteValue = (id, value) => {
 	cy.get(`[id="${id}"]`).clear().type(value);
 	cy.get('.formosa-autocomplete__option__button').contains(value).click();
-});
+};
 
-Cypress.Commands.add('fillForm', ({ fields }) => {
+export const fillForm = ({ fields }) => {
 	if (Object.prototype.hasOwnProperty.call(fields, 'text')) {
 		Object.keys(fields.text).forEach((name) => {
 			const value = typeof fields.text[name] === 'function' ? fields.text[name]() : fields.text[name];
-			cy.fillTextField(name, value);
+			fillTextField(name, value);
 		});
 	}
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'password')) {
 		Object.keys(fields.password).forEach((name) => {
-			cy.fillTextField(name, fields.password[name]);
+			const value = typeof fields.password[name] === 'function' ? fields.password[name]() : fields.password[name];
+			fillTextField(name, value);
 		});
 	}
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'textarea')) {
 		Object.keys(fields.textarea).forEach((name) => {
-			cy.fillTextField(name, fields.textarea[name]);
+			const value = typeof fields.textarea[name] === 'function' ? fields.textarea[name]() : fields.textarea[name];
+			fillTextField(name, value);
 		});
 	}
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'select')) {
 		Object.keys(fields.select).forEach((name) => {
-			cy.get(`[name="${name}"]`).select(fields.select[name]);
+			const value = typeof fields.select[name] === 'function' ? fields.select[name]() : fields.select[name];
+			cy.get(`[name="${name}"]`).select(value);
 		});
 	}
 
@@ -149,14 +77,15 @@ Cypress.Commands.add('fillForm', ({ fields }) => {
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'radio')) {
 		Object.keys(fields.radio).forEach((name) => {
-			cy.get(`[name="${name}"][value="${fields.radio[name]}"]`).check();
+			const value = typeof fields.radio[name] === 'function' ? fields.radio[name]() : fields.radio[name];
+			cy.get(`[name="${name}"][value="${value}"]`).check();
 		});
 	}
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteRemove')) {
 		Object.keys(fields.autocompleteRemove).forEach((name) => {
 			fields.autocompleteRemove[name].forEach((value) => {
-				cy.removeAutocompleteValue(name, value);
+				removeAutocompleteValue(name, value);
 			});
 		});
 	}
@@ -164,7 +93,7 @@ Cypress.Commands.add('fillForm', ({ fields }) => {
 	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteAdd')) {
 		Object.keys(fields.autocompleteAdd).forEach((name) => {
 			fields.autocompleteAdd[name].forEach((value) => {
-				cy.addAutocompleteValue(name, value);
+				addAutocompleteValue(name, value);
 			});
 		});
 	}
@@ -180,9 +109,9 @@ Cypress.Commands.add('fillForm', ({ fields }) => {
 			cy.get(`[id="${name}"]`).attachFile(fields.fileAdd[name].source);
 		});
 	}
-});
+};
 
-Cypress.Commands.add('checkForm', ({ fields }) => {
+export const checkForm = ({ fields }) => {
 	if (Object.prototype.hasOwnProperty.call(fields, 'text')) {
 		Object.keys(fields.text).forEach((name) => {
 			cy.get(`[name="${name}"][value="${fields.text[name].replace(/"/g, '\\"')}"]`).should('exist');
@@ -278,14 +207,82 @@ Cypress.Commands.add('checkForm', ({ fields }) => {
 	}
 
 	if (Object.prototype.hasOwnProperty.call(fields, 'default')) {
-		cy.checkForm({ fields: fields.default });
+		checkForm({ fields: fields.default });
 	}
-});
+};
 
-Cypress.Commands.add('closeToast', (message) => {
-	cy.contains(message).should('exist');
-	cy.get('.formosa-toast__close').click();
-});
+export const closeToast = (message) => {
+	cy.contains(message).next('.formosa-toast__close').click();
+};
+
+export const logout = () => {
+	cy.intercept('DELETE', '**/api/auth/logout').as('logout');
+	cy.visit('/');
+	cy.get('[data-cy="menu"]').click();
+	cy.get('[data-cy="logout"]').click();
+	cy.wait('@logout').its('response.statusCode').should('equal', 204);
+	cy.location('pathname').should('eq', Cypress.env('public_path'));
+};
+
+export const handlesIndex = ({ path, plural }) => {
+	cy.get('[data-cy="menu"]').click();
+	cy.get(`[href="${Cypress.env('public_path')}${path}"]`).click();
+	cy.wait(`@getRecords${plural}`).its('response.statusCode').should('equal', 200);
+	cy.get('[data-cy="title"]').should('have.text', plural);
+	cy.get('[data-cy="num-results"]').invoke('text').should('match', /^ \([0-9,]+ results?\)/);
+};
+
+export const handlesAdd = ({ fields, singular, waitFn }) => {
+	if (waitFn) {
+		waitFn();
+	}
+	cy.get('[data-cy="title"]').should('have.text', `Add ${singular}`);
+	fillForm({ fields });
+	cy.get('[data-cy="save"]').click();
+	cy.wait(`@postRecord${singular}`).its('response.statusCode').should('equal', 201);
+	closeToast(`${capitalize(singular)} added successfully.`);
+};
+
+export const handlesEdit = ({ fields, singular, waitFn }) => {
+	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
+	if (waitFn) {
+		waitFn();
+	}
+	cy.get('[data-cy="title"]').should('have.text', `Edit ${singular}`);
+	fillForm({ fields });
+	cy.get('[data-cy="save"]').click();
+	cy.wait('@putRecord').its('response.statusCode').should('equal', 200);
+	closeToast(`${capitalize(singular)} saved successfully.`);
+
+	cy.reload();
+	cy.wait(`@getRecord${singular}`).its('response.statusCode').should('equal', 200);
+	if (waitFn) {
+		waitFn();
+	}
+	checkForm({ fields });
+};
+
+export const handlesDelete = ({ plural, singular }) => {
+	cy.get('[data-cy="delete"]').click();
+	cy.get('[data-cy="modal-delete"]').click();
+	cy.wait('@deleteRecord').its('response.statusCode').should('equal', 204);
+	closeToast(`${capitalize(singular)} deleted successfully.`);
+	cy.wait(`@getRecords${plural}`).its('response.statusCode').should('equal', 200);
+};
+
+export const setupInterceptions = ({ apiPath, formWait, plural, singular }) => {
+	cy.intercept('GET', `${apiPath}*`).as(`getRecords${plural}`);
+	cy.intercept('GET', `${apiPath}/*`).as(`getRecord${singular}`);
+	cy.intercept('POST', `${apiPath}*`).as(`postRecord${singular}`);
+	cy.intercept('PUT', `${apiPath}/*`).as('putRecord');
+	cy.intercept('DELETE', `${apiPath}/*`).as('deleteRecord');
+
+	const waitKeys = Object.keys(formWait || {});
+	const numWait = waitKeys.length;
+	for (let i = 0; i < numWait; i += 1) {
+		cy.intercept('GET', formWait[waitKeys[i]]).as(waitKeys[i]);
+	}
+};
 
 export const mockServerError = (method, url) => ( // eslint-disable-line import/prefer-default-export
 	cy.intercept(
@@ -305,25 +302,34 @@ export const mockServerError = (method, url) => ( // eslint-disable-line import/
 	)
 );
 
-Cypress.Commands.add('handlesIndexErrors', ({ apiPath, path }) => {
+export const handlesIndexErrors = ({ apiPath, path }) => {
 	mockServerError('GET', `${apiPath}*`).as('getRecords');
 
 	cy.visit(path);
 	cy.wait('@getRecords').its('response.statusCode').should('equal', 500);
 	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
-});
+};
 
-Cypress.Commands.add('handlesAddErrors', ({ apiPath, fields, path }) => {
+export const handlesAddErrors = ({ apiPath, formWait, fields, path }) => {
 	mockServerError('POST', `${apiPath}*`).as('postRecord');
 
+	const waitKeys = Object.keys(formWait || {});
+	const numWait = waitKeys.length;
+	for (let i = 0; i < numWait; i += 1) {
+		cy.intercept('GET', formWait[waitKeys[i]]).as(waitKeys[i]);
+	}
+
 	cy.visit(`${path}/add`);
-	cy.fillForm({ fields });
-	cy.contains('Save').click();
+	for (let i = 0; i < numWait; i += 1) {
+		cy.wait(`@${waitKeys[i]}`).its('response.statusCode').should('equal', 200);
+	}
+	fillForm({ fields });
+	cy.get('[data-cy="save"]').click();
 	cy.wait('@postRecord').its('response.statusCode').should('equal', 500);
 	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
-});
+};
 
-Cypress.Commands.add('handlesViewErrors', ({ apiPath, fields, path, singular }) => {
+export const handlesViewErrors = ({ apiPath, fields, formWait, path, singular }) => {
 	// View with not found error.
 	cy.visit(`${path}/987654321`);
 	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: This record does not exist.');
@@ -331,43 +337,64 @@ Cypress.Commands.add('handlesViewErrors', ({ apiPath, fields, path, singular }) 
 	mockServerError('GET', `${apiPath}/*`).as('getRecord');
 	cy.intercept('POST', `${apiPath}*`).as('postRecord');
 
+	const waitKeys = Object.keys(formWait || {});
+	const numWait = waitKeys.length;
+	for (let i = 0; i < numWait; i += 1) {
+		cy.intercept('GET', formWait[waitKeys[i]]).as(waitKeys[i]);
+	}
+
 	// Add.
 	cy.visit(`${path}/add`);
-	cy.fillForm({ fields });
-	cy.contains('Save').click();
+	for (let i = 0; i < numWait; i += 1) {
+		cy.wait(`@${waitKeys[i]}`).its('response.statusCode').should('equal', 200);
+	}
+	fillForm({ fields });
+	cy.get('[data-cy="save"]').click();
 	cy.wait('@postRecord').its('response.statusCode').should('equal', 201);
-	cy.closeToast(`${capitalize(singular)} added successfully.`);
+	closeToast(`${capitalize(singular)} added successfully.`);
 
 	// View with server error.
 	cy.wait('@getRecord').its('response.statusCode').should('equal', 500);
 	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
-});
+};
 
-Cypress.Commands.add('handlesEditErrors', ({ apiPath, fields, fieldsEdit, path, singular }) => {
+export const handlesEditErrors = ({ apiPath, fields, fieldsEdit, formWait, path, singular }) => {
 	cy.intercept('GET', `${apiPath}/*`).as('getRecord');
 	cy.intercept('POST', `${apiPath}*`).as('postRecord');
 	mockServerError('PUT', `${apiPath}/*`).as('putRecord');
 	mockServerError('DELETE', `${apiPath}/*`).as('deleteRecord');
 
+	const waitKeys = Object.keys(formWait || {});
+	const numWait = waitKeys.length;
+	for (let i = 0; i < numWait; i += 1) {
+		cy.intercept('GET', formWait[waitKeys[i]]).as(waitKeys[i]);
+	}
+
 	// Add.
 	cy.visit(`${path}/add`);
-	cy.fillForm({ fields });
-	cy.contains('Save').click();
+	for (let i = 0; i < numWait; i += 1) {
+		cy.wait(`@${waitKeys[i]}`).its('response.statusCode').should('equal', 200);
+	}
+	fillForm({ fields });
+	cy.get('[data-cy="save"]').click();
 	cy.wait('@postRecord').its('response.statusCode').should('equal', 201);
-	cy.closeToast(`${capitalize(singular)} added successfully.`);
+	closeToast(`${capitalize(singular)} added successfully.`);
 
 	// View.
 	cy.wait('@getRecord').its('response.statusCode').should('equal', 200);
+	for (let i = 0; i < numWait; i += 1) {
+		cy.wait(`@${waitKeys[i]}`).its('response.statusCode').should('equal', 200);
+	}
 
 	// Edit with error.
-	cy.fillForm({ fields: fieldsEdit || fields });
-	cy.contains('Save').click();
+	fillForm({ fields: fieldsEdit || fields });
+	cy.get('[data-cy="save"]').click();
 	cy.wait('@putRecord').its('response.statusCode').should('equal', 500);
 	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
 
 	// Delete with error.
-	cy.contains('Delete').click();
-	cy.get('dialog').contains('Delete').click();
+	cy.get('[data-cy="delete"]').click();
+	cy.get('[data-cy="modal-delete"]').click();
 	cy.wait('@deleteRecord').its('response.statusCode').should('equal', 500);
 	cy.get('.formosa-alert--error').invoke('text').should('equal', 'Error: Unable to connect to the server. Please try again later.');
-});
+};

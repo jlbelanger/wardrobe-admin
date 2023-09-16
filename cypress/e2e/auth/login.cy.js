@@ -44,8 +44,8 @@ describe('login', () => {
 			cy.location('pathname').should('eq', Cypress.env('public_path'));
 
 			// Logout.
-			cy.get('#crudnick-menu-button').click();
-			cy.contains('Logout').click();
+			cy.get('[data-cy="menu"]').click();
+			cy.get('[data-cy="logout"]').click();
 			cy.wait('@logout').its('response.statusCode').should('equal', 204);
 			cy.location('pathname').should('eq', Cypress.env('public_path'));
 		});

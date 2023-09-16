@@ -1,3 +1,15 @@
+import {
+	handlesAdd,
+	handlesAddErrors,
+	handlesDelete,
+	handlesEdit,
+	handlesEditErrors,
+	handlesIndex,
+	handlesIndexErrors,
+	handlesViewErrors,
+	setupInterceptions,
+} from '../support/commands';
+
 describe('seasons', () => {
 	beforeEach(() => {
 		cy.login();
@@ -14,9 +26,13 @@ describe('seasons', () => {
 	it('works', () => {
 		const timestamp = (new Date()).getTime();
 
-		cy.handlesEverything({
+		setupInterceptions(data);
+		handlesIndex(data);
+		cy.get('[data-cy="add"]').click();
+
+		handlesAdd({
 			...data,
-			fieldsAdd: {
+			fields: {
 				text: {
 					name: `Aaa ${timestamp}`,
 					start_date: '01-01',
@@ -24,17 +40,19 @@ describe('seasons', () => {
 					order_num: '1',
 				},
 			},
-			fieldsEdit: [
-				{
-					text: {
-						name: `Bbb ${timestamp}`,
-						start_date: '03-03',
-						end_date: '04-04',
-						order_num: '2',
-					},
-				},
-			],
 		});
+		handlesEdit({
+			...data,
+			fields: {
+				text: {
+					name: `Bbb ${timestamp}`,
+					start_date: '03-03',
+					end_date: '04-04',
+					order_num: '2',
+				},
+			},
+		});
+		handlesDelete(data);
 	});
 
 	const errorData = {
@@ -47,21 +65,26 @@ describe('seasons', () => {
 				order_num: '1',
 			},
 		},
+		fieldsEdit: {
+			text: {
+				name: () => (`Bbb ${(new Date()).getTime()}`),
+			},
+		},
 	};
 
 	it('handles index errors', () => {
-		cy.handlesIndexErrors(errorData);
+		handlesIndexErrors(errorData);
 	});
 
 	it('handles add errors', () => {
-		cy.handlesAddErrors(errorData);
+		handlesAddErrors(errorData);
 	});
 
 	it('handles view errors', () => {
-		cy.handlesViewErrors(errorData);
+		handlesViewErrors(errorData);
 	});
 
 	it('handles edit errors', () => {
-		cy.handlesEditErrors(errorData);
+		handlesEditErrors(errorData);
 	});
 });

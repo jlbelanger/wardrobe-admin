@@ -1,3 +1,15 @@
+import {
+	handlesAdd,
+	handlesAddErrors,
+	handlesDelete,
+	handlesEdit,
+	handlesEditErrors,
+	handlesIndex,
+	handlesIndexErrors,
+	handlesViewErrors,
+	setupInterceptions,
+} from '../support/commands';
+
 describe('colours', () => {
 	beforeEach(() => {
 		cy.login();
@@ -14,21 +26,27 @@ describe('colours', () => {
 	it('works', () => {
 		const timestamp = (new Date()).getTime();
 
-		cy.handlesEverything({
+		setupInterceptions(data);
+		handlesIndex(data);
+		cy.get('[data-cy="add"]').click();
+
+		handlesAdd({
 			...data,
-			fieldsAdd: {
+			fields: {
 				text: {
 					name: `Aaa ${timestamp}`,
 				},
 			},
-			fieldsEdit: [
-				{
-					text: {
-						name: `Bbb ${timestamp}`,
-					},
-				},
-			],
 		});
+		handlesEdit({
+			...data,
+			fields: {
+				text: {
+					name: `Bbb ${timestamp}`,
+				},
+			},
+		});
+		handlesDelete(data);
 	});
 
 	const errorData = {
@@ -38,21 +56,26 @@ describe('colours', () => {
 				name: () => (`Aaa ${(new Date()).getTime()}`),
 			},
 		},
+		fieldsEdit: {
+			text: {
+				name: () => (`Bbb ${(new Date()).getTime()}`),
+			},
+		},
 	};
 
 	it('handles index errors', () => {
-		cy.handlesIndexErrors(errorData);
+		handlesIndexErrors(errorData);
 	});
 
 	it('handles add errors', () => {
-		cy.handlesAddErrors(errorData);
+		handlesAddErrors(errorData);
 	});
 
 	it('handles view errors', () => {
-		cy.handlesViewErrors(errorData);
+		handlesViewErrors(errorData);
 	});
 
 	it('handles edit errors', () => {
-		cy.handlesEditErrors(errorData);
+		handlesEditErrors(errorData);
 	});
 });
