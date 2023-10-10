@@ -39,7 +39,7 @@ describe('users', () => {
 					email: `aaa${timestamp}@example.com`,
 				},
 				password: {
-					password: 'aaa',
+					password: 'aaaaaaaa',
 				},
 			},
 		});
@@ -50,17 +50,12 @@ describe('users', () => {
 					username: `bbb${timestamp}`,
 					email: `bbb${timestamp}@example.com`,
 				},
-				password: {
-					password: 'bbb',
-				},
 			},
 		});
 
 		cy.clearCookies();
-		cy.login(`aaa${timestamp}`, 'aaa', 401);
-		cy.login(`aaa${timestamp}`, 'bbb', 401);
-		cy.login(`bbb${timestamp}`, 'aaa', 401);
-		cy.login(`bbb${timestamp}`, 'bbb');
+		cy.login(`aaa${timestamp}`, 'aaaaaaaa', 401);
+		cy.login(`bbb${timestamp}`, 'aaaaaaaa');
 		logout();
 		cy.login();
 		cy.visit('/');
@@ -73,7 +68,7 @@ describe('users', () => {
 		handlesDelete(data);
 
 		cy.clearCookies();
-		cy.login(`bbb${timestamp}`, 'bbb', 401);
+		cy.login(`bbb${timestamp}`, 'aaaaaaaa', 401);
 		cy.visit('/');
 	});
 
@@ -85,7 +80,7 @@ describe('users', () => {
 				email: () => (`aaa${(new Date()).getTime()}@example.com`),
 			},
 			password: {
-				password: 'aaa',
+				password: 'aaaaaaaa',
 			},
 		},
 		fieldsEdit: {
