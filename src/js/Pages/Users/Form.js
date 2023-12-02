@@ -1,14 +1,23 @@
+import { Auth } from '@jlbelanger/crudnick';
 import { Field } from '@jlbelanger/formosa';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function Form({ formType }) {
+export default function Form({ formType, row }) {
+	const isCurrentUser = formType === 'edit' && row.id === Auth.id().toString();
+	const isEditable = formType === 'add' || isCurrentUser;
+
+	if (isCurrentUser) {
+		return null;
+	}
+
 	return (
 		<div className="formosa-horizontal">
 			<Field
 				autoCapitalize="none"
 				autoComplete="off"
 				autoFocus
+				disabled={!isEditable}
 				label="Username"
 				maxLength={255}
 				name="username"
@@ -17,6 +26,7 @@ export default function Form({ formType }) {
 			<Field
 				autoCapitalize="none"
 				autoComplete="off"
+				disabled={!isEditable}
 				label="Email"
 				maxLength={255}
 				name="email"
@@ -26,11 +36,10 @@ export default function Form({ formType }) {
 			{formType === 'add' && (
 				<Field
 					autoComplete="off"
-					autoCorrect="off"
 					label="Password"
 					name="password"
-					type="password"
 					required
+					type="password"
 				/>
 			)}
 		</div>
@@ -39,4 +48,9 @@ export default function Form({ formType }) {
 
 Form.propTypes = {
 	formType: PropTypes.string.isRequired,
+	row: PropTypes.object,
+};
+
+Form.defaultProps = {
+	row: null,
 };

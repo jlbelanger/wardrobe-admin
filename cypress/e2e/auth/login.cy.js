@@ -1,7 +1,7 @@
 import { mockServerError } from '../../support/commands';
 
 describe('login', () => {
-	describe('with an invalid username', () => {
+	describe('with invalid username', () => {
 		it('shows an error', () => {
 			cy.intercept('POST', '**/api/auth/login').as('login');
 
@@ -15,7 +15,7 @@ describe('login', () => {
 		});
 	});
 
-	describe('with an invalid password', () => {
+	describe('with invalid password', () => {
 		it('shows an error', () => {
 			cy.intercept('POST', '**/api/auth/login').as('login');
 
@@ -29,7 +29,7 @@ describe('login', () => {
 		});
 	});
 
-	describe('with a valid username and password', () => {
+	describe('with valid username and password', () => {
 		it('works', () => {
 			cy.intercept('POST', '**/api/auth/login').as('login');
 			cy.intercept('DELETE', '**/api/auth/logout').as('logout');
