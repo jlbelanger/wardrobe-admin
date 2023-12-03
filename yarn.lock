@@ -1485,11 +1485,11 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
-"@jlbelanger/crudnick@jlbelanger/crudnick#ca763616eaa9d0b65eb28bd90c0beee46ec9be03":
+"@jlbelanger/crudnick@jlbelanger/crudnick#0dfe7a2bb3a163c795fe0a0485df92fd791a5724":
   version "1.0.1"
-  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/ca763616eaa9d0b65eb28bd90c0beee46ec9be03"
+  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/0dfe7a2bb3a163c795fe0a0485df92fd791a5724"
   dependencies:
-    "@jlbelanger/formosa" jlbelanger/formosa#fb0e98ddb57dce6e5023c3b0cd9cfc64396a423c
+    "@jlbelanger/formosa" jlbelanger/formosa#caa3f062eaad6a250052fb19f28a556264f4f5b8
     get-value "^3.0.1"
     js-cookie "^3.0.1"
     prop-types "^15.8.1"
@@ -1497,16 +1497,6 @@
 "@jlbelanger/formosa@jlbelanger/formosa#caa3f062eaad6a250052fb19f28a556264f4f5b8":
   version "1.0.2"
   resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/caa3f062eaad6a250052fb19f28a556264f4f5b8"
-  dependencies:
-    get-value "^3.0.1"
-    prop-types "^15.8.1"
-    react-promise-tracker "^2.1.1"
-    set-value "^4.1.0"
-    uuid "^9.0.0"
-
-"@jlbelanger/formosa@jlbelanger/formosa#fb0e98ddb57dce6e5023c3b0cd9cfc64396a423c":
-  version "1.0.2"
-  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/fb0e98ddb57dce6e5023c3b0cd9cfc64396a423c"
   dependencies:
     get-value "^3.0.1"
     prop-types "^15.8.1"
