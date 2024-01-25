@@ -28,6 +28,19 @@ export default function Form() {
 				type="file"
 			/>
 			<Field
+				afterAdd={() => {
+					let elem = document.querySelector('[id="colour"]');
+					if (elem) {
+						elem.focus();
+					} else {
+						elem = document.querySelector('[id="seasons"]');
+						if (elem) {
+							elem.focus();
+						} else {
+							document.querySelector('[id="is_default"]').focus();
+						}
+					}
+				}}
 				label="Category"
 				labelFn={labelFn}
 				max={1}
@@ -38,6 +51,14 @@ export default function Form() {
 				valueKey={valueKey}
 			/>
 			<Field
+				afterAdd={() => {
+					const elem = document.querySelector('[id="seasons"]');
+					if (elem) {
+						elem.focus();
+					} else {
+						document.querySelector('[id="is_default"]').focus();
+					}
+				}}
 				label="Colour"
 				labelFn={labelFn}
 				max={1}
@@ -48,6 +69,9 @@ export default function Form() {
 				valueKey={valueKey}
 			/>
 			<Field
+				afterAdd={() => {
+					document.querySelector('[id="is_default"]').focus();
+				}}
 				label="Seasons"
 				labelFn={labelFn}
 				name="seasons"
