@@ -1610,18 +1610,18 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
-"@jlbelanger/crudnick@jlbelanger/crudnick#08f2884a987e89546061499dc1f9562572f76954":
+"@jlbelanger/crudnick@jlbelanger/crudnick#9c3ff05fb9cd182ef7b9deca2cae53fe36b9194c":
   version "1.0.1"
-  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/08f2884a987e89546061499dc1f9562572f76954"
+  resolved "https://codeload.github.com/jlbelanger/crudnick/tar.gz/9c3ff05fb9cd182ef7b9deca2cae53fe36b9194c"
   dependencies:
-    "@jlbelanger/formosa" jlbelanger/formosa#27a1b4ad6b84404cf1424e0569243e50cd869b2d
+    "@jlbelanger/formosa" jlbelanger/formosa#19b0791991938b94dc0a25422b89264cd8bd92e7
     get-value "^3.0.1"
     js-cookie "^3.0.5"
     prop-types "^15.8.1"
 
-"@jlbelanger/formosa@jlbelanger/formosa#27a1b4ad6b84404cf1424e0569243e50cd869b2d":
+"@jlbelanger/formosa@jlbelanger/formosa#19b0791991938b94dc0a25422b89264cd8bd92e7":
   version "1.0.2"
-  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/27a1b4ad6b84404cf1424e0569243e50cd869b2d"
+  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/19b0791991938b94dc0a25422b89264cd8bd92e7"
   dependencies:
     get-value "^3.0.1"
     prop-types "^15.8.1"
@@ -3218,9 +3218,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001538, caniuse-lite@^1.0.30001565:
-  version "1.0.30001580"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001580.tgz"
-  integrity sha512-mtj5ur2FFPZcCEpXFy8ADXbDACuNFXg6mxVDqp7tqooX6l3zwm+d8EPoeOSIFRDvHs8qu7/SLFOGniULkcH2iA==
+  version "1.0.30001589"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001589.tgz"
+  integrity sha512-vNQWS6kI+q6sBlHbh71IIeC+sRwK2N3EDySc/updIGhIee2x5z00J4c1242/5/d6EpEMdOnk/m+6tuk4/tcsqg==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
