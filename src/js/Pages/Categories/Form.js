@@ -6,7 +6,10 @@ export default function Form() {
 		if (!value) {
 			return '';
 		}
-		return value.toLowerCase()
+		return value
+			.normalize('NFD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.toLowerCase()
 			.replace(/ & /g, '-and-')
 			.replace(/<[^>]+>/g, '')
 			.replace(/['’.]/g, '')
