@@ -1,6 +1,7 @@
-$crudnick-primary: #382893;
-
-@import '@jlbelanger/crudnick/src/style';
+@use '~@jlbelanger/crudnick/src/scss/utilities/variables' as crudnick with (
+	$crudnick-primary: #382893,
+);
+@use '~@jlbelanger/crudnick/src/style';
 
 .image-placeholder {
 	height: 50px;
@@ -18,9 +19,9 @@ $crudnick-primary: #382893;
 }
 
 .border {
-	border: 1px solid $crudnick-primary;
-	margin-top: $crudnick-margin;
-	padding: $crudnick-padding;
+	border: 1px solid crudnick.$crudnick-primary;
+	margin-top: crudnick.$crudnick-margin;
+	padding: crudnick.$crudnick-padding;
 
 	& > :first-child {
 		margin-top: 0;

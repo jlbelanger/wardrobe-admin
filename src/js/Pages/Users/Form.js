@@ -3,7 +3,7 @@ import { Field } from '@jlbelanger/formosa';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function Form({ formType, row }) {
+export default function Form({ formType, row = null }) {
 	const isCurrentUser = formType === 'edit' && row.id === Auth.id().toString();
 	const isEditable = formType === 'add' || isCurrentUser;
 
@@ -49,8 +49,4 @@ export default function Form({ formType, row }) {
 Form.propTypes = {
 	formType: PropTypes.string.isRequired,
 	row: PropTypes.object,
-};
-
-Form.defaultProps = {
-	row: null,
 };
