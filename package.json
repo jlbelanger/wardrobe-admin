@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "The admin site for Jenny's Wardrobe.",
 	"license": "GPL-3.0-only",
+	"type": "module",
 	"author": {
 		"name": "Jenny Belanger",
 		"email": "mail@jennybelanger.com",
@@ -14,29 +15,24 @@
 	},
 	"homepage": "./admin",
 	"scripts": {
-		"start": "npx update-browserslist-db@latest && react-scripts start",
-		"build": "react-scripts build",
+		"start": "npx update-browserslist-db@latest && vite",
+		"build": "vite build",
 		"lint": "yarn lint:css && yarn lint:js",
-		"lint:css": "node_modules/.bin/stylelint 'src/scss/**/*.scss'",
-		"lint:js": "node_modules/.bin/eslint . --ext .js",
+		"lint:css": "node_modules/.bin/stylelint 'src/css/**/*.css'",
+		"lint:js": "node_modules/.bin/eslint . --ext .js --ext .jsx",
 		"test:cypress": "node_modules/.bin/cypress open"
 	},
 	"dependencies": {
-		"@jlbelanger/crudnick": "jlbelanger/crudnick#0e880c3357fcb96371f6340653d856d39d325a0e",
-		"@jlbelanger/formosa": "jlbelanger/formosa#1061f96c17116e84f4f781e84e72d712d8623b26",
+		"@jlbelanger/crudnick": "jlbelanger/crudnick#f626491b3529e7f410a99796802fdbb1e6853653",
+		"@jlbelanger/formosa": "jlbelanger/formosa#6e7f522d40a47c6396aa1a6bde51c11a82797cac",
+		"@vitejs/plugin-react": "^4.4.1",
 		"prop-types": "^15.8.1",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
-		"react-router-dom": "~5.3.4",
-		"react-scripts": "^5.0.1"
+		"react-router": "^7.9.5",
+		"vite": "^6.3.4"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.26.0",
-		"@babel/eslint-parser": "^7.25.9",
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-		"@babel/plugin-transform-private-property-in-object": "^7.25.9",
-		"@babel/preset-env": "^7.26.0",
-		"@babel/preset-react": "^7.26.3",
 		"@stylistic/stylelint-plugin": "^3.1.1",
 		"cypress": "^13.17.0",
 		"cypress-file-upload": "^5.0.8",
@@ -46,11 +42,9 @@
 		"eslint-plugin-jsx-a11y": "^6.10.2",
 		"eslint-plugin-react": "^7.37.3",
 		"eslint-plugin-react-hooks": "^5.1.0",
-		"sass": "^1.83.0",
-		"stylelint": "^16.12.0",
-		"stylelint-config-standard-scss": "^14.0.0",
-		"stylelint-order": "^6.0.4",
-		"stylelint-scss": "^6.10.0"
+		"stylelint": "^16.18.0",
+		"stylelint-config-standard": "^38.0.0",
+		"stylelint-order": "^6.0.4"
 	},
 	"browserslist": [
 		"defaults",

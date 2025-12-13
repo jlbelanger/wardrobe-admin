@@ -97,7 +97,7 @@ describe('forgot password', () => {
 				cy.get('[type="submit"]').click();
 				cy.wait('@resetPassword').its('response.statusCode').should('equal', 204);
 				closeToast('Password reset successfully.');
-				cy.location('pathname').should('eq', `${Cypress.env('public_path')}/`);
+				cy.location('pathname').should('eq', Cypress.env('public_path'));
 
 				// With same link twice.
 				cy.visit(resetPasswordUrl);

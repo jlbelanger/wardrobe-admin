@@ -5,7 +5,7 @@ export default function Form() {
 	const labelFn = (option) => (
 		<a
 			className="crudnick-autocomplete-link"
-			href={`${process.env.PUBLIC_URL}/${option.type}/${option.id}`}
+			href={`${import.meta.env.VITE_BASE_PATH}/${option.type}/${option.id}`}
 			rel="noopener noreferrer"
 			target="_blank"
 		>
@@ -21,7 +21,7 @@ export default function Form() {
 			<Field
 				accept="image/*"
 				label="Image"
-				imagePrefix={process.env.REACT_APP_FRONTEND_URL}
+				imagePrefix={import.meta.env.VITE_FRONTEND_URL}
 				imagePreview
 				name="filename"
 				required
