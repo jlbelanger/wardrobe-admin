@@ -1,6 +1,6 @@
 import { Layout as CrudnickLayout } from '@jlbelanger/crudnick';
-import React from 'react';
 import { Outlet } from 'react-router';
+import React from 'react';
 
 export default function MyLayout() {
 	return (
