@@ -1,14 +1,13 @@
 import { AddForm } from '@jlbelanger/crudnick';
-import Form from './Form';
-import React from 'react';
+import Form from './Form.jsx';
 
 export default function Add() {
 	return (
 		<AddForm
-			apiPath="users"
+			apiPath="categories"
 			component={Form}
-			path="users"
-			singular="user"
+			path="categories"
+			singular="category"
 		/>
 	);
 }

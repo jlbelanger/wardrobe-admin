@@ -8,7 +8,7 @@ import {
 	handlesIndexErrors,
 	handlesViewErrors,
 	setupInterceptions,
-} from '../support/commands';
+} from '../support/commands.js';
 
 describe('seasons', () => {
 	beforeEach(() => {

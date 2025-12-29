@@ -1,6 +1,6 @@
 import { errorMessageText, MyForm } from '@jlbelanger/crudnick';
 import { Field, FormosaContext, Submit } from '@jlbelanger/formosa';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function ChangeEmail({ email }) {

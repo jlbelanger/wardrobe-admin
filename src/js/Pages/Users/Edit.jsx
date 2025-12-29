@@ -1,10 +1,9 @@
 import { Auth, EditForm } from '@jlbelanger/crudnick';
-import ChangeEmail from './Partials/ChangeEmail';
-import ChangePassword from './Partials/ChangePassword';
-import ChangeUsername from './Partials/ChangeUsername';
-import Form from './Form';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import ChangeEmail from './Partials/ChangeEmail.jsx';
+import ChangePassword from './Partials/ChangePassword.jsx';
+import ChangeUsername from './Partials/ChangeUsername.jsx';
+import Form from './Form.jsx';
+import { useParams } from 'react-router';
 
 export default function Edit() {
 	const { id } = useParams();

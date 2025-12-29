@@ -1,7 +1,7 @@
 import { errorMessageText, MyForm } from '@jlbelanger/crudnick';
 import { Field, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 export default function ChangeUsername({ id, username }) {
 	const [row, setRow] = useState({ username });

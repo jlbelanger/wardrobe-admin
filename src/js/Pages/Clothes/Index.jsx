@@ -1,5 +1,4 @@
 import { IndexTable } from '@jlbelanger/crudnick';
-import React from 'react';
 
 export default function Index() {
 	const columns = [
@@ -21,7 +20,7 @@ export default function Index() {
 						className="image"
 						height={50}
 						loading="lazy"
-						src={`${process.env.REACT_APP_FRONTEND_URL}${value}`}
+						src={`${import.meta.env.VITE_FRONTEND_URL}${value}`}
 					/>
 				);
 			},
