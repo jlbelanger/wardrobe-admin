@@ -1,6 +1,6 @@
 import { errorMessageText, MyForm } from '@jlbelanger/crudnick';
 import { Field, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function ChangePassword() {
 	const [row, setRow] = useState({});
@@ -10,8 +10,8 @@ export default function ChangePassword() {
 			<h2>Change password</h2>
 
 			<MyForm
-				errorMessageText={errorMessageText}
 				clearOnSubmit
+				errorMessageText={errorMessageText}
 				method="PUT"
 				path="auth/change-password"
 				preventEmptyRequest

@@ -1,4 +1,4 @@
-import 'cypress-file-upload'; // eslint-disable-line import/no-extraneous-dependencies
+import 'cypress-file-upload';
 
 const capitalize = (s) => (
 	s.replace(/(?:^|\s)\S/g, (a) => (a.toUpperCase()))
@@ -35,54 +35,54 @@ export const addAutocompleteValue = (id, value) => {
 };
 
 export const fillForm = ({ fields }) => {
-	if (Object.prototype.hasOwnProperty.call(fields, 'text')) {
+	if (Object.hasOwn(fields, 'text')) {
 		Object.keys(fields.text).forEach((name) => {
 			const value = typeof fields.text[name] === 'function' ? fields.text[name]() : fields.text[name];
 			fillTextField(name, value);
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'password')) {
+	if (Object.hasOwn(fields, 'password')) {
 		Object.keys(fields.password).forEach((name) => {
 			const value = typeof fields.password[name] === 'function' ? fields.password[name]() : fields.password[name];
 			fillTextField(name, value);
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'textarea')) {
+	if (Object.hasOwn(fields, 'textarea')) {
 		Object.keys(fields.textarea).forEach((name) => {
 			const value = typeof fields.textarea[name] === 'function' ? fields.textarea[name]() : fields.textarea[name];
 			fillTextField(name, value);
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'select')) {
+	if (Object.hasOwn(fields, 'select')) {
 		Object.keys(fields.select).forEach((name) => {
 			const value = typeof fields.select[name] === 'function' ? fields.select[name]() : fields.select[name];
 			cy.get(`[name="${name}"]`).select(value);
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'check')) {
+	if (Object.hasOwn(fields, 'check')) {
 		Object.keys(fields.check).forEach((name) => {
 			cy.get(`[name="${name}"]`).check();
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'uncheck')) {
+	if (Object.hasOwn(fields, 'uncheck')) {
 		Object.keys(fields.uncheck).forEach((name) => {
 			cy.get(`[name="${name}"]`).uncheck();
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'radio')) {
+	if (Object.hasOwn(fields, 'radio')) {
 		Object.keys(fields.radio).forEach((name) => {
 			const value = typeof fields.radio[name] === 'function' ? fields.radio[name]() : fields.radio[name];
 			cy.get(`[name="${name}"][value="${value}"]`).check();
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteRemove')) {
+	if (Object.hasOwn(fields, 'autocompleteRemove')) {
 		Object.keys(fields.autocompleteRemove).forEach((name) => {
 			fields.autocompleteRemove[name].forEach((value) => {
 				removeAutocompleteValue(name, value);
@@ -90,7 +90,7 @@ export const fillForm = ({ fields }) => {
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteAdd')) {
+	if (Object.hasOwn(fields, 'autocompleteAdd')) {
 		Object.keys(fields.autocompleteAdd).forEach((name) => {
 			fields.autocompleteAdd[name].forEach((value) => {
 				addAutocompleteValue(name, value);
@@ -98,13 +98,13 @@ export const fillForm = ({ fields }) => {
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'fileRemove')) {
+	if (Object.hasOwn(fields, 'fileRemove')) {
 		Object.keys(fields.fileRemove).forEach((name) => {
 			cy.get(`[id="${name}-remove"]`).click();
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'fileAdd')) {
+	if (Object.hasOwn(fields, 'fileAdd')) {
 		Object.keys(fields.fileAdd).forEach((name) => {
 			cy.get(`[id="${name}"]`).attachFile(fields.fileAdd[name].source);
 		});
@@ -112,49 +112,49 @@ export const fillForm = ({ fields }) => {
 };
 
 export const checkForm = ({ fields }) => {
-	if (Object.prototype.hasOwnProperty.call(fields, 'text')) {
+	if (Object.hasOwn(fields, 'text')) {
 		Object.keys(fields.text).forEach((name) => {
 			cy.get(`[name="${name}"][value="${fields.text[name].replace(/"/g, '\\"')}"]`).should('exist');
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'password')) {
+	if (Object.hasOwn(fields, 'password')) {
 		Object.keys(fields.password).forEach((name) => {
 			cy.get(`[name="${name}"][value=""]`).should('exist');
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'textarea')) {
+	if (Object.hasOwn(fields, 'textarea')) {
 		Object.keys(fields.textarea).forEach((name) => {
 			cy.get(`[name="${name}"]`).invoke('val').should('equal', fields.textarea[name]);
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'select')) {
+	if (Object.hasOwn(fields, 'select')) {
 		Object.keys(fields.select).forEach((name) => {
 			cy.get(`[name="${name}"] option:selected`).should('have.text', fields.select[name]);
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'check')) {
+	if (Object.hasOwn(fields, 'check')) {
 		Object.keys(fields.check).forEach((name) => {
 			cy.get(`[name="${name}"]:checked`).should('exist');
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'uncheck')) {
+	if (Object.hasOwn(fields, 'uncheck')) {
 		Object.keys(fields.uncheck).forEach((name) => {
 			cy.get(`[name="${name}"]:not(:checked)`).should('exist');
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'radio')) {
+	if (Object.hasOwn(fields, 'radio')) {
 		Object.keys(fields.radio).forEach((name) => {
 			cy.get(`[name="${name}"][value="${fields.radio[name]}"]:checked`).should('exist');
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteAdd')) {
+	if (Object.hasOwn(fields, 'autocompleteAdd')) {
 		Object.keys(fields.autocompleteAdd).forEach((name) => {
 			fields.autocompleteAdd[name].forEach((value) => {
 				cy.get(`[id="${name}-wrapper"] .crudnick-autocomplete-link`).contains(value);
@@ -162,7 +162,7 @@ export const checkForm = ({ fields }) => {
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteKeep')) {
+	if (Object.hasOwn(fields, 'autocompleteKeep')) {
 		Object.keys(fields.autocompleteKeep).forEach((name) => {
 			fields.autocompleteKeep[name].forEach((value) => {
 				cy.get(`[id="${name}-wrapper"] .crudnick-autocomplete-link`).contains(value);
@@ -170,7 +170,7 @@ export const checkForm = ({ fields }) => {
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteRemove')) {
+	if (Object.hasOwn(fields, 'autocompleteRemove')) {
 		Object.keys(fields.autocompleteRemove).forEach((name) => {
 			fields.autocompleteRemove[name].forEach((value) => {
 				cy.get(`[id="${name}-wrapper"]`).should('have.attr', 'data-value').and('not.contain', value);
@@ -178,19 +178,19 @@ export const checkForm = ({ fields }) => {
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'autocompleteEmpty')) {
+	if (Object.hasOwn(fields, 'autocompleteEmpty')) {
 		Object.keys(fields.autocompleteEmpty).forEach((name) => {
 			cy.get(`[id="${name}-wrapper"]`).should('have.attr', 'data-value', 'null');
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'fileRemove')) {
+	if (Object.hasOwn(fields, 'fileRemove')) {
 		Object.keys(fields.fileRemove).forEach((name) => {
 			cy.get(`[id="${name}-name"]`).should('not.contain', fields.fileRemove[name]);
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'fileAdd')) {
+	if (Object.hasOwn(fields, 'fileAdd')) {
 		Object.keys(fields.fileAdd).forEach((name) => {
 			if (typeof fields.fileAdd[name].dest === 'object') {
 				cy.get(`[id="${name}-name"]`).invoke('text').should('match', fields.fileAdd[name].dest);
@@ -200,13 +200,13 @@ export const checkForm = ({ fields }) => {
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'autopopulate')) {
+	if (Object.hasOwn(fields, 'autopopulate')) {
 		Object.keys(fields.autopopulate).forEach((name) => {
 			cy.get(`[name="${name}"][value="${fields.autopopulate[name].replace(/"/g, '\\"')}"]`).should('exist');
 		});
 	}
 
-	if (Object.prototype.hasOwnProperty.call(fields, 'default')) {
+	if (Object.hasOwn(fields, 'default')) {
 		checkForm({ fields: fields.default });
 	}
 };
@@ -284,7 +284,7 @@ export const setupInterceptions = ({ apiPath, formWait, plural, singular }) => {
 	}
 };
 
-export const mockServerError = (method, url) => ( // eslint-disable-line import/prefer-default-export
+export const mockServerError = (method, url) => (
 	cy.intercept(
 		method,
 		url,

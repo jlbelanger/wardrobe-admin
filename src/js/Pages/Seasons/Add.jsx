@@ -1,6 +1,5 @@
 import { AddForm } from '@jlbelanger/crudnick';
-import Form from './Form';
-import React from 'react';
+import Form from './Form.jsx';
 
 export default function Add() {
 	return (

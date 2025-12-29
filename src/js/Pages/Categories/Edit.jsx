@@ -1,6 +1,5 @@
 import { EditForm } from '@jlbelanger/crudnick';
-import Form from './Form';
-import React from 'react';
+import Form from './Form.jsx';
 import { useParams } from 'react-router';
 
 export default function Edit() {

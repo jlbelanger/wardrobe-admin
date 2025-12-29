@@ -1,5 +1,4 @@
 import { IndexTable } from '@jlbelanger/crudnick';
-import React from 'react';
 
 export default function Index() {
 	return (

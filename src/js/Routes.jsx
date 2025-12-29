@@ -1,21 +1,21 @@
 import { ForgotPassword, Login, NotFound, PrivateRoute, ResetPassword } from '@jlbelanger/crudnick';
-import CategoryAdd from './Pages/Categories/Add';
-import CategoryEdit from './Pages/Categories/Edit';
-import CategoryIndex from './Pages/Categories/Index';
-import ClothesAdd from './Pages/Clothes/Add';
-import ClothesEdit from './Pages/Clothes/Edit';
-import ClothesIndex from './Pages/Clothes/Index';
-import ColourAdd from './Pages/Colours/Add';
-import ColourEdit from './Pages/Colours/Edit';
-import ColourIndex from './Pages/Colours/Index';
+import CategoryAdd from './Pages/Categories/Add.jsx';
+import CategoryEdit from './Pages/Categories/Edit.jsx';
+import CategoryIndex from './Pages/Categories/Index.jsx';
+import ClothesAdd from './Pages/Clothes/Add.jsx';
+import ClothesEdit from './Pages/Clothes/Edit.jsx';
+import ClothesIndex from './Pages/Clothes/Index.jsx';
+import ColourAdd from './Pages/Colours/Add.jsx';
+import ColourEdit from './Pages/Colours/Edit.jsx';
+import ColourIndex from './Pages/Colours/Index.jsx';
 import { createBrowserRouter } from 'react-router';
-import Layout from './Layout';
-import SeasonAdd from './Pages/Seasons/Add';
-import SeasonEdit from './Pages/Seasons/Edit';
-import SeasonIndex from './Pages/Seasons/Index';
-import UserAdd from './Pages/Users/Add';
-import UserEdit from './Pages/Users/Edit';
-import UserIndex from './Pages/Users/Index';
+import Layout from './Layout.jsx';
+import SeasonAdd from './Pages/Seasons/Add.jsx';
+import SeasonEdit from './Pages/Seasons/Edit.jsx';
+import SeasonIndex from './Pages/Seasons/Index.jsx';
+import UserAdd from './Pages/Users/Add.jsx';
+import UserEdit from './Pages/Users/Edit.jsx';
+import UserIndex from './Pages/Users/Index.jsx';
 
 export default createBrowserRouter(
 	[

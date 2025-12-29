@@ -9,7 +9,7 @@ import {
 	logout,
 	mockServerError,
 	setupInterceptions,
-} from '../support/commands';
+} from '../support/commands.js';
 
 describe('users', () => {
 	beforeEach(() => {

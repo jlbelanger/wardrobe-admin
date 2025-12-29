@@ -1,4 +1,4 @@
-import { closeToast, mockServerError } from '../../support/commands';
+import { closeToast, mockServerError } from '../../support/commands.js';
 
 describe('forgot password', () => {
 	describe('with non-existent email', () => {

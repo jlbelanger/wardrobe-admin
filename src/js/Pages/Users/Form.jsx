@@ -1,7 +1,6 @@
 import { Auth } from '@jlbelanger/crudnick';
 import { Field } from '@jlbelanger/formosa';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 export default function Form({ formType, row = null }) {
 	const isCurrentUser = formType === 'edit' && row.id === Auth.id().toString();
@@ -30,8 +29,8 @@ export default function Form({ formType, row = null }) {
 				label="Email"
 				maxLength={255}
 				name="email"
-				type="email"
 				required
+				type="email"
 			/>
 			{formType === 'add' && (
 				<Field

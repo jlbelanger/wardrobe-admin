@@ -1,5 +1,4 @@
 import { Field } from '@jlbelanger/formosa';
-import React from 'react';
 
 export default function Form() {
 	const labelFn = (option) => (
@@ -20,9 +19,9 @@ export default function Form() {
 			<Field autoFocus label="Name" maxLength={255} name="name" required />
 			<Field
 				accept="image/*"
-				label="Image"
 				imagePrefix={import.meta.env.VITE_FRONTEND_URL}
 				imagePreview
+				label="Image"
 				name="filename"
 				required
 				type="file"
