@@ -12,4 +12,4 @@ if [[ ! -f "cypress.env.json" ]]; then
 	cp "cypress.env.example.json" "cypress.env.json"
 fi
 
-yarn install
+npm install
