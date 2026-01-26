@@ -1,15 +1,13 @@
 import 'cypress-file-upload';
 
-const capitalize = (s) => (
-	s.replace(/(?:^|\s)\S/g, (a) => (a.toUpperCase()))
-);
+const capitalize = (s) => s.replace(/(?:^|\s)\S/g, (a) => a.toUpperCase());
 
 export const pad = (n, width, z = '0') => {
 	n = n.toString();
 	return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
 
-export const randomNumber = (min, max) => (Math.floor(Math.random() * (max - min + 1)) + min);
+export const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const randomDate = () => {
 	const year = randomNumber(1900, 2100);
@@ -284,24 +282,18 @@ export const setupInterceptions = ({ apiPath, formWait, plural, singular }) => {
 	}
 };
 
-export const mockServerError = (method, url) => (
-	cy.intercept(
-		method,
-		url,
-		{
-			statusCode: 500,
-			body: {
-				errors: [
-					{
-						title: 'Unable to connect to the server. Please try again later.',
-						status: '500',
-					},
-				],
-			},
-		}
-	)
-);
-
+export const mockServerError = (method, url) =>
+	cy.intercept(method, url, {
+		statusCode: 500,
+		body: {
+			errors: [
+				{
+					title: 'Unable to connect to the server. Please try again later.',
+					status: '500',
+				},
+			],
+		},
+	});
 export const handlesIndexErrors = ({ apiPath, path }) => {
 	mockServerError('GET', `${apiPath}*`).as('getRecords');
 

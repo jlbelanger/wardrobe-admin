@@ -30,7 +30,7 @@ describe('clothes', () => {
 	};
 
 	it('works', () => {
-		let timestamp = `${(new Date()).getTime()}1`;
+		let timestamp = `${new Date().getTime()}1`;
 
 		setupInterceptions(data);
 		handlesIndex(data);
@@ -81,7 +81,7 @@ describe('clothes', () => {
 		});
 		handlesDelete(data);
 
-		timestamp = `${(new Date()).getTime()}2`;
+		timestamp = `${new Date().getTime()}2`;
 		cy.get('[data-cy="add"]').click();
 		handlesAdd({
 			...data,
@@ -144,7 +144,7 @@ describe('clothes', () => {
 		...data,
 		fields: {
 			text: {
-				name: () => (`Aaa ${(new Date()).getTime()}`),
+				name: () => `Aaa ${new Date().getTime()}`,
 			},
 			autocompleteAdd: {
 				category: ['Skirts'],
@@ -158,7 +158,7 @@ describe('clothes', () => {
 		},
 		fieldsEdit: {
 			text: {
-				name: () => (`Bbb ${(new Date()).getTime()}`),
+				name: () => `Bbb ${new Date().getTime()}`,
 			},
 		},
 	};

@@ -24,7 +24,7 @@ describe('seasons', () => {
 	};
 
 	it('works', () => {
-		const timestamp = (new Date()).getTime();
+		const timestamp = new Date().getTime();
 
 		setupInterceptions(data);
 		handlesIndex(data);
@@ -59,7 +59,7 @@ describe('seasons', () => {
 		...data,
 		fields: {
 			text: {
-				name: () => (`Aaa ${(new Date()).getTime()}`),
+				name: () => `Aaa ${new Date().getTime()}`,
 				start_date: '01-01',
 				end_date: '02-02',
 				order_num: '1',
@@ -67,7 +67,7 @@ describe('seasons', () => {
 		},
 		fieldsEdit: {
 			text: {
-				name: () => (`Bbb ${(new Date()).getTime()}`),
+				name: () => `Bbb ${new Date().getTime()}`,
 			},
 		},
 	};

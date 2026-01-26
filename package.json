@@ -17,14 +17,15 @@
 	"scripts": {
 		"start": "npx update-browserslist-db && vite",
 		"build": "vite build",
-		"lint": "npm run lint:css && npm run lint:js",
+		"lint": "npm run lint:css && npm run lint:js && npm run lint:prettier",
 		"lint:css": "npx stylelint 'src/css/**/*.css'",
 		"lint:js": "npx eslint .",
+		"lint:prettier": "npx prettier . --check",
 		"test:cypress": "npx cypress open"
 	},
 	"dependencies": {
-		"@jlbelanger/crudnick": "jlbelanger/crudnick#2b9290f77107a06fda143c90694827584af0bad1",
-		"@jlbelanger/formosa": "jlbelanger/formosa#99e1ad71849b821dea3957851b50a16ba3cbc798",
+		"@jlbelanger/crudnick": "jlbelanger/crudnick#5c296c7b0ef55b9c4cff9a816398b0b8444abcfc",
+		"@jlbelanger/formosa": "jlbelanger/formosa#76a276723cbce31a46b539a65097c41db360a039",
 		"@vitejs/plugin-react": "^5.1.2",
 		"postcss": "^8.5.6",
 		"prop-types": "^15.8.1",
@@ -45,6 +46,7 @@
 		"eslint-plugin-react": "^7.37.5",
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"globals": "^16.5.0",
+		"prettier": "^3.7.4",
 		"stylelint": "^16.26.1",
 		"stylelint-config-standard": "^39.0.1",
 		"stylelint-order": "^7.0.0"

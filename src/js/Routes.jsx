@@ -90,5 +90,5 @@ export default createBrowserRouter(
 	],
 	{
 		basename: import.meta.env.VITE_BASE_PATH,
-	}
+	},
 );

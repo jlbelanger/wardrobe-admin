@@ -25,7 +25,7 @@ describe('users', () => {
 	};
 
 	it('works', () => {
-		const timestamp = (new Date()).getTime();
+		const timestamp = new Date().getTime();
 
 		setupInterceptions(data);
 		handlesIndex(data);
@@ -73,8 +73,8 @@ describe('users', () => {
 		...data,
 		fields: {
 			text: {
-				username: () => (`aaa${(new Date()).getTime()}`),
-				email: () => (`aaa${(new Date()).getTime()}@example.com`),
+				username: () => `aaa${new Date().getTime()}`,
+				email: () => `aaa${new Date().getTime()}@example.com`,
 			},
 			password: {
 				password: 'aaaaaaaa',

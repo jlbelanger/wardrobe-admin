@@ -24,7 +24,7 @@ describe('colours', () => {
 	};
 
 	it('works', () => {
-		const timestamp = (new Date()).getTime();
+		const timestamp = new Date().getTime();
 
 		setupInterceptions(data);
 		handlesIndex(data);
@@ -53,12 +53,12 @@ describe('colours', () => {
 		...data,
 		fields: {
 			text: {
-				name: () => (`Aaa ${(new Date()).getTime()}`),
+				name: () => `Aaa ${new Date().getTime()}`,
 			},
 		},
 		fieldsEdit: {
 			text: {
-				name: () => (`Bbb ${(new Date()).getTime()}`),
+				name: () => `Bbb ${new Date().getTime()}`,
 			},
 		},
 	};

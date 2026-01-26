@@ -55,7 +55,7 @@ export default function Index() {
 				if (!value) {
 					return null;
 				}
-				return value.map((season) => (season.name)).join(', ');
+				return value.map((season) => season.name).join(', ');
 			},
 		},
 	];

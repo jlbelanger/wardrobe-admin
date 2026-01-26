@@ -24,7 +24,7 @@ describe('categories', () => {
 	};
 
 	it('works', () => {
-		let timestamp = `${(new Date()).getTime()}1`;
+		let timestamp = `${new Date().getTime()}1`;
 
 		setupInterceptions(data);
 		handlesIndex(data);
@@ -58,7 +58,7 @@ describe('categories', () => {
 		});
 		handlesDelete(data);
 
-		timestamp = `${(new Date()).getTime()}2`;
+		timestamp = `${new Date().getTime()}2`;
 		cy.get('[data-cy="add"]').click();
 		handlesAdd({
 			...data,
@@ -99,14 +99,14 @@ describe('categories', () => {
 		...data,
 		fields: {
 			text: {
-				name: () => (`Aaa ${(new Date()).getTime()}`),
+				name: () => `Aaa ${new Date().getTime()}`,
 				order_num: '1',
 				order_num_footer: '2',
 			},
 		},
 		fieldsEdit: {
 			text: {
-				name: () => (`Bbb ${(new Date()).getTime()}`),
+				name: () => `Bbb ${new Date().getTime()}`,
 			},
 		},
 	};
