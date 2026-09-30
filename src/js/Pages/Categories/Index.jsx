@@ -25,7 +25,7 @@ export default function Index() {
 			}}
 			path="categories"
 			title="Categories"
-			url="categories?sort=order_num&fields[categories]=name,order_num,is_default"
+			url="categories?fields[categories]=name,order_num,is_default"
 		/>
 	);
 }

@@ -15,7 +15,7 @@ export default function Index() {
 			}}
 			path="colours"
 			title="Colours"
-			url="colours?sort=name&fields[colours]=name"
+			url="colours?fields[colours]=name"
 		/>
 	);
 }

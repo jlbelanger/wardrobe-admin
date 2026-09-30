@@ -20,7 +20,7 @@ export default function Index() {
 			}}
 			path="seasons"
 			title="Seasons"
-			url="seasons?sort=order_num&fields[seasons]=name,order_num"
+			url="seasons?fields[seasons]=name,order_num"
 		/>
 	);
 }

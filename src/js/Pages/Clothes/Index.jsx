@@ -65,7 +65,6 @@ export default function Index() {
 	url += '&fields[colours]=name';
 	url += '&fields[seasons]=name';
 	url += '&include=category,colour,seasons';
-	url += '&sort=name';
 	return (
 		<IndexTable
 			columns={columns}

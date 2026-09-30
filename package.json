@@ -24,7 +24,7 @@
 		"test:cypress": "npx cypress open"
 	},
 	"dependencies": {
-		"@jlbelanger/crudnick": "jlbelanger/crudnick#5c296c7b0ef55b9c4cff9a816398b0b8444abcfc",
+		"@jlbelanger/crudnick": "jlbelanger/crudnick#49063286675ff9ca936933b85758dabbfc2ae098",
 		"@jlbelanger/formosa": "jlbelanger/formosa#76a276723cbce31a46b539a65097c41db360a039",
 		"@vitejs/plugin-react": "^5.1.2",
 		"postcss": "^8.5.6",
